@@ -1,0 +1,1089 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  
+  <title>api/server Page</title>
+  <style>
+  
+  /* 전체 스크롤바 */
+::-webkit-scrollbar {
+  width: 12px; /* 세로 스크롤바 너비 */
+  height: 12px; /* 가로 스크롤바 높이 */
+}
+
+/* 스크롤바 배경 */
+::-webkit-scrollbar-track {
+  background: #000; /* 검정 배경 */
+  border-radius: 6px; /* 둥근 모서리 */
+}
+
+/* 스크롤바 손잡이 */
+::-webkit-scrollbar-thumb {
+  background: #fff; /* 흰색 손잡이 */
+  border-radius: 6px; /* 둥근 손잡이 */
+  border: 3px solid #000; /* 손잡이 주변에 검정 테두리 */
+}
+
+/* 스크롤바 손잡이 (마우스 오버 시) */
+::-webkit-scrollbar-thumb:hover {
+  background: #ccc; /* 손잡이 색상 변경 (회색) */
+}
+
+/* 수평 스크롤바 */
+::-webkit-scrollbar-horizontal {
+  height: 10px; /* 수평 스크롤바 높이 */
+}
+
+/* 수직 스크롤바 */
+::-webkit-scrollbar-vertical {
+  width: 10px; /* 수직 스크롤바 너비 */
+}
+
+    @font-face {
+      font-family: 'DungGeunMo';
+      src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+
+    /* 기본 스타일 */
+* {
+  font-family: 'DungGeunMo', sans-serif !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1em; /* 텍스트 크기 기본값 설정 */
+}
+
+/* 배경 색상 및 글자 색상 */
+body, html {
+  font-family: 'DungGeunMo', sans-serif !important;
+  color: black; /* 기본 글자 색상 화이트 */
+}
+
+/* 제목 및 중요한 텍스트 */
+h1, h2, h3 {
+  color: #fff; /* 흰색 글씨 */
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 28px; /* 타이틀 글씨 크기 약간 크게 */
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px; /* 중요 제목 크기 */
+  margin-bottom: 18px;
+}
+
+h3 {
+  font-size: 20px; /* 부제목 크기 */
+  margin-bottom: 16px;
+}
+
+/* 맵 리스트 및 항목 */
+#mapList {
+  margin-top: 20px;
+  padding: 10px;
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 16px; /* 글씨 크기 균일화 */
+    text-align: center;
+}
+
+
+.map-item {
+  color: #fff; /* 글자 색상 화이트 */
+  background-color: #1e1e1e; /* 항목 배경색을 #1e1e1e로 설정 */
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+     font-size: 1.2em; /* 글씨 크기 1.5배 */
+}
+
+.map-item span {
+     font-size: 1.2em; /* 글씨 크기 1.5배 */
+  display: block;
+  color: #fff; /* 각 span 요소의 텍스트 색상 하얀색 */
+}
+/* map-actions 버튼 텍스트 색상만 하얀색으로 설정 */
+.map-item .map-actions button {
+  color: #fff; /* 버튼 텍스트 색상 하얀색으로 */
+  background-color: transparent; /* 버튼 배경색은 투명 */
+  border: 2px solid #fff; /* 버튼의 테두리는 흰색 */
+   font-size: 1.2em; /* 글씨 크기 1.5배 */
+}
+
+.map-item .map-actions button:hover {
+  background-color: #444; /* 버튼 호버 시 배경색 변경 */
+}
+
+.map-item .map-actions button:active {
+  background-color: #666; /* 버튼 클릭 시 배경색 변경 */
+}
+
+/* 서버 상태 박스 스타일 */
+.server-status {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color:white;
+  width: 300px;
+  margin: 20px auto;
+  text-align: center;
+  font-size: 16px; /* 텍스트 크기 */
+}
+
+.server-status span {
+  font-weight: bold;
+  font-size: 18px; /* 상태 글씨 크기 */
+}
+
+/* 상태 표시 색상 */
+.online {
+  color: #4caf50; /* 녹색 */
+}
+
+.offline {
+  color: #f44336; /* 빨간색 */
+}
+
+/* 버튼 기본 스타일 */
+button {
+  padding: 12px 25px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #555; /* 버튼 호버 시 밝은 회색 */
+}
+
+/* 폼 스타일 */
+#mapSection {
+  display: none;
+  margin-top: 20px;
+  padding: 10px; /* 세로 여백 줄이기 */
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 8px;
+ max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-height: 450px; /* 세로 길이를 줄이기 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+}
+
+#mapSaveForm {
+  display: grid;
+  gap: 1px; /* 폼 항목 간 여백 줄이기 */
+    position: relative; /* #mapSaveForm 기준으로 절대 위치 설정 */
+}
+
+#mapSaveForm label {
+  font-weight: bold;
+}
+
+#mapSaveForm input, #mapSaveForm select {
+  width: 100%;
+  padding: 10px; /* 세로 크기 줄이기 */
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+
+#mapSaveForm input[type="file"] {
+  padding: 5px;
+}
+
+/* 로그인 및 회원가입 폼 */
+#loginForm, #signUpForm {
+  display: none;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#loginForm input, #signUpForm input {
+  width: 100%;
+  padding: 3px;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+   
+
+/* 맵 세이브 폼에서 닫기 버튼 스타일 */
+.form-close-btn {
+  position: absolute; /* 절대 위치 지정 */
+  top: 0;  /* 상단에 배치 */
+  right: 0;  /* 우측에 배치 */
+  background-color: #444; /* 회색 불투명 배경 */
+  color: white; /* 텍스트 색상 하얀색 */
+  border: 2px solid #444; /* 검은 테두리 */
+  border-radius: 5px; /* 둥근 모서리 */
+  width: 25px;  /* 버튼 크기 적당히 조정 */
+  height: 25px;
+  cursor: pointer;
+  font-size: 16px; /* 폰트 크기 조정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0; /* 내부 여백을 없애서 버튼 크기를 정확히 맞춤 */
+}
+
+.form-close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.4); /* 버튼 호버 시 배경색 더 어두워짐 */
+}
+
+.form-close-btn:active {
+  background-color: rgba(0, 0, 0, 0.6); /* 버튼 클릭 시 배경색 더 어두워짐 */
+}
+
+
+
+body.form-open {
+  overflow: hidden;
+}
+
+#responseBox {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  width: 60%;
+  max-width: 600px;
+  display: none;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+
+  /* ✅ 중앙 정렬 핵심 */
+  margin-left: auto;
+  margin-right: auto;
+
+  /* ✅ display 속성 확인 */
+  display: block;
+}
+
+
+/* 로그인 후 환영 메시지 스타일 */
+#welcomeBox {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 20px; /* 폰트 크기 */
+  color: #fff; /* 글자 색상은 흰색 */
+  background-color: #4CAF50; /* 녹색 배경 */
+  padding: 15px;
+  border-radius: 8px; /* 둥근 모서리 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+  width: 60%;
+  max-width: 600px; /* 최대 너비 설정 */
+  margin-left: auto;
+  margin-right: auto;
+  display: none; /* 초기에는 숨겨짐 */
+  transition: all 0.3s ease; /* 애니메이션 추가 */
+}
+
+#welcomeBox:hover {
+  transform: scale(1.05); /* 마우스 오버 시 크기 확대 */
+}
+
+#welcomeBox p {
+  font-size: 18px; /* 하위 텍스트 크기 */
+  font-weight: 600;
+}
+
+/* 모든 label 요소의 텍스트 색상 하얀색으로 */
+label {
+  color: #fff; /* label 텍스트 색상을 하얀색으로 */
+  font-size: 18px; /* 폰트 크기 */
+  font-weight: bold; /* 굵은 글씨 */
+  display: block; /* 줄바꿈 설정 */
+  margin-bottom: 8px; /* 라벨과 입력 요소 간 여백 */
+}
+
+/* 입력 필드 스타일 */
+input[type="text"], input[type="file"], select {
+  width: 100%; /* 입력 필드가 부모 요소를 꽉 채우도록 */
+  padding: 12px;
+  background-color: #333; /* 어두운 배경 */
+  color: #fff; /* 글자 색상 하얀색 */
+  border: 1px solid #444; /* 어두운 테두리 */
+  border-radius: 5px;
+  font-size: 18px; /* 글씨 크기 */
+  margin-bottom: 10px; /* 입력 요소와 라벨 간 여백 */
+}
+
+/* 파일 입력 필드 */
+input[type="file"] {
+  padding: 5px;
+}
+
+/* Select 필드 스타일 */
+select {
+  width: 100%; /* select 필드가 부모 요소를 꽉 채우도록 */
+  padding: 12px;
+  background-color: #333; /* 어두운 배경 */
+  color: #fff; /* 글자 색상 하얀색 */
+  border: 1px solid #444; /* 어두운 테두리 */
+  border-radius: 5px;
+  font-size: 18px; /* 글씨 크기 */
+  margin-bottom: 10px; /* 입력 요소와 라벨 간 여백 */
+}
+
+
+  /* 기본 파일 입력 버튼 스타일링 */
+  #fileInput {
+    width: 100%; /* 전체 너비 사용 */
+    padding: 12px; /* 여백을 크게 설정 */
+    font-size: 16px; /* 글자 크기 */
+    background-color: white; /* 배경색 */
+    color: white; /* 텍스트 색상 */
+    border: 1px solid #444; /* 테두리 색상 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer;
+  }
+
+  /* 파일 버튼의 크기와 모양을 추가로 개선하려면 */
+  #fileInput::file-selector-button {
+    padding: 6px 10px; /* 버튼 여백 조정 */
+    font-size: 15px;
+    color: black;
+    background-color: white;; /* 배경색 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer;
+  }
+
+
+  #fileInput::file-selector-button:hover {
+     background-color: #d3d3d386; /* 회색 배경 */
+  }
+  
+  #fileInput::file-selector-button:active {
+     background-color: #4c4848; /* 회색 배경 */
+  }
+  </style>
+</head>
+<body>
+
+  <body>
+
+  <!-- Server Status and Buttons -->
+  <div class="server-status">
+    <strong>Server Status Monitoring</strong><br />
+    Proxy Server: <span id="proxyStatus" class="offline">-</span><br />
+    Backend Server: <span id="backendStatus" class="offline">-</span>
+  </div>
+
+    <div id="welcomeBox" style="text-align:center; margin-top:20px; font-size:18px; display:none;"></div>
+    <div id="responseBox" style="text-align:center; margin-top:20px; font-size:18px; display:none;"></div>
+
+  <div style="text-align: center;">
+    <button type="button" id="showMapFormBtn">Map upload</button>
+    <button type="button" id="searchMapBtn">Search Maps</button>
+  </div>
+
+  <div id="mapList"></div>
+
+  <!-- Map Save Form -->
+  <div id="mapSection">
+
+    <form id="mapSaveForm">
+         <button type="button" id="closeMapSectionBtn" class="form-close-btn">X</button>
+         <br><br>
+      <label>Map Name:
+        <input type="text" name="mapName" id="mapName" required placeholder="0~20 + No special char or Korean" />
+      </label>
+      <br>
+      <label>Access Type:
+        <select name="accessType" id="accessType">
+          <option value="PRIVATE">PRIVATE</option>
+          <option value="PUBLIC">PUBLIC</option>
+        </select>
+      </label>
+      <br>
+    <label>
+      Map File (.txt):
+      <input type="file" name="file" id="fileInput" accept=".txt" required />
+      <br />
+      <small style="color: white;margin-bottom: 0px; margin-top:0px; ">* Only .txt files allowed. No special characters or Korean</small>
+    </label>
+      <br>
+      <button type="submit"style="margin-bottom: 0px; margin-top:0px; ">Upload</button>
+    </form>
+    <div id="statusMessage" style="display:none;  margin-bottom: 0px; margin-top:0px; font-weight: bold;"></div>
+  </div>
+
+  <div style="text-align: center;">
+    <button type="button" id="loginBtn">Login</button>
+    <button type="button" id="signUpBtn">Sign Up</button>
+  </div>
+
+  <div id="loginForm">
+     <h3>Login</h3>
+    <input type="text" id="loginId" placeholder="Username (8–16 characters, letters & numbers) " /><br /><br />
+    <input type="password" id="loginPw" placeholder="Password (8–16 characters, letters & numbers)" /><br /><br />
+    <button type="button" id="loginSubmitBtn">Login</button>
+    <button type="button" id="loginCloseBtn">Close</button>
+  </div>
+
+  <div id="signUpForm">
+    <h3>Sign Up</h3>
+    <input type="text" id="signUpId" placeholder="Username (8–16 characters, letters & numbers)" /><br /><br />
+    <input type="password" id="signUpPw" placeholder="Password (8–16 characters, letters & numbers)" /><br /><br />
+    <button type="button" id="signUpSubmitBtn">Register</button>
+    <button type="button" id="signUpCloseBtn">Close</button>
+  </div>
+
+
+
+  </body>
+
+
+<script>
+  // Check if https protocol is being used
+  if (location.protocol !== 'https:') {
+    location.replace('https://' + location.hostname + location.pathname + location.search);
+  }
+
+  const PROXY_STATUS_URL = 'https://proxy-nx9j.onrender.com/proxy/ping';
+  let lastError = null;
+  let errorShown = false;
+  let responseBoxInterval; // Store interval globally to clear it later
+
+  const checkServerStatus = async () => {
+    try {
+      const res = await fetch(PROXY_STATUS_URL, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+      });
+
+      if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+      const json = await res.json();
+
+      if (!json.proxy || !json.backend) {
+        throw new Error('Unexpected response format');
+      }
+
+      lastError = null;
+      errorShown = false;
+      return json;
+    } catch (err) {
+      if (err.message !== lastError && !errorShown) {
+        console.warn('[Server status request failed]', err.message);
+        alert('Cannot connect to the server. Retrying...');
+        lastError = err.message;
+        errorShown = true;
+      }
+      return { proxy: 'offline', backend: 'offline' };
+    }
+  };
+
+  const updateServerStatus = async () => {
+    const proxyEl = document.getElementById('proxyStatus');
+    const backendEl = document.getElementById('backendStatus');
+
+    const { proxy, backend } = await checkServerStatus();
+
+    proxyEl.textContent = proxy === 'online' ? 'Online' : 'Offline';
+    proxyEl.className = proxy;
+
+    backendEl.textContent = backend === 'online' ? 'Online' : 'Offline';
+    backendEl.className = backend;
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+        // 엔터로 로그인 폼 제출
+    document.getElementById('loginForm').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('loginSubmitBtn').click();
+      }
+    });
+
+    // 엔터로 회원가입 폼 제출
+    document.getElementById('signUpForm').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('signUpSubmitBtn').click();
+      }
+    });
+
+
+    const PROXY_BASE = 'https://proxy-nx9j.onrender.com/proxy';
+    updateServerStatus();
+    setInterval(updateServerStatus, 10000);
+
+    const printDebugLog = (data) => {
+      if (data.debugLog) {
+        console.group(`[DEBUG] ${data.debugLog.route}`);
+        console.log(data.debugLog);
+        console.groupEnd();
+      }
+    };
+
+    // Hide all forms function
+    const hideAllForms = () => {
+      document.getElementById('mapSection').style.display = 'none'; // Hide map save form
+      document.getElementById('loginForm').style.display = 'none'; // Hide login form
+      document.getElementById('signUpForm').style.display = 'none'; // Hide sign up form
+      document.getElementById('mapList').style.display = 'none'; // Hide map search list
+      document.getElementById('responseBox').style.display = 'none'; // Hide response box
+    };
+
+    // Show map save form and hide other forms
+    document.getElementById('showMapFormBtn').addEventListener('click', () => {
+      hideAllForms();
+      document.getElementById('mapSection').style.display = 'block'; // Show map save form
+      document.getElementById('responseBox').style.display = 'none'; // Hide response box
+    });
+
+    // Show map search and hide other forms
+    document.getElementById('searchMapBtn').addEventListener('click', () => {
+      hideAllForms();
+      document.getElementById('mapList').style.display = 'block'; // Show map search list
+      showResponseBox('Searching maps');
+      mapSearch();
+    });
+
+    // Show login form and hide other forms
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      hideAllForms();
+      document.getElementById('loginForm').style.display = 'block'; // Show login form
+      document.getElementById('responseBox').style.display = 'none'; // Hide response box
+    });
+
+    // Show sign up form and hide other forms
+    document.getElementById('signUpBtn').addEventListener('click', () => {
+      hideAllForms();
+      document.getElementById('signUpForm').style.display = 'block'; // Show sign up form
+      document.getElementById('responseBox').style.display = 'none'; // Hide response box
+    });
+
+    // Close map save form
+    document.getElementById('closeMapSectionBtn').addEventListener('click', () => {
+      document.getElementById('mapSection').style.display = 'none';
+      document.getElementById('showMapFormBtn').style.display = 'inline-block';
+      document.getElementById('mapSaveForm').reset();
+      document.getElementById('statusMessage').style.display = 'none';
+    });
+
+    // Handle map save form submission
+// Handle map save form submission
+
+//맵저장
+document.getElementById('mapSaveForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const statusDiv = document.getElementById('statusMessage');
+  const welcomeBox = document.getElementById('welcomeBox');
+  const fileInput = document.getElementById('fileInput');
+  const mapName = document.getElementById('mapName').value.trim();
+  const accessType = document.getElementById('accessType').value;
+
+  const nameRegex = /^[A-Za-z0-9_\-T]{1,20}$/;
+  if (!nameRegex.test(mapName)) {
+    welcomeBox.textContent = `Map name must be 1–20 alphanumeric characters.`;
+    welcomeBox.style.backgroundColor = '#f44336'; // 빨간 배경
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+    return;
+  }
+
+  const fileName = fileInput.files[0]?.name;
+  const koreanCharsRegex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+  if (koreanCharsRegex.test(fileName)) {
+    welcomeBox.textContent = `File name cannot contain Korean characters.`;
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+    return;
+  }
+
+  if (!fileInput.files.length) {
+    welcomeBox.textContent = `Please select a map file.`;
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', fileInput.files[0]);
+  formData.append('dto', new Blob([JSON.stringify({ mapName, accessType })], { type: 'application/json' }));
+
+  try {
+    statusDiv.style.display = 'block';
+    statusDiv.innerHTML = `<h3 style="color: white;">Uploading map...</h3>`;
+    showResponseBox('uploading map');
+
+    const response = await fetch(`${PROXY_BASE}/map/save`, {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+      mode: 'cors'
+    });
+
+    const result = await response.json();
+    console.log('[Map upload result]', result);
+
+
+
+   statusDiv.innerHTML = `<h3 style="color: white;">${result.message || 'Map upload successfully.'}</h3>`;
+
+// welcomeBox 업데이트 (성공 시)
+welcomeBox.textContent =  'Map upload successfully.';
+welcomeBox.style.backgroundColor = '#4CAF50';
+welcomeBox.style.display = 'block';
+
+    if (!response.ok) {
+      welcomeBox.textContent = result.message || 'Map upload failed.';
+      welcomeBox.style.backgroundColor = '#f44336';
+      welcomeBox.style.display = 'block';
+      setTimeout(() => {
+        welcomeBox.style.backgroundColor = '#4CAF50';
+      }, 5000);
+      hideResponseBox();
+      return;
+    }
+
+
+hideResponseBox();
+
+  } catch (error) {
+    console.error('Upload error:', error);
+    welcomeBox.textContent = 'Map upload failed due to an unexpected error.';
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+    hideResponseBox();
+  }
+});
+
+
+
+
+ //로그인
+document.getElementById('loginSubmitBtn').addEventListener('click', async () => {
+  const userId = document.getElementById('loginId').value.trim();
+  const userPw = document.getElementById('loginPw').value.trim();
+  const valid = /^[A-Za-z0-9]{8,16}$/;
+  const welcomeBox = document.getElementById('welcomeBox');
+
+  if (userId === userPw) {
+       welcomeBox.textContent = '[Login] Username and password cannot be the same.';
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    return;
+  }
+
+  if (!valid.test(userId) || !valid.test(userPw)) {
+       welcomeBox.textContent = '[Login] Username/Password must be 8–16 alphanumeric characters.';
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    return;
+  }
+
+  try {
+    showResponseBox('Logging in');
+
+    const res = await fetch(`${PROXY_BASE}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ userId, userPw })
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText);
+    }
+
+    const data = await res.json();
+    printDebugLog(data);
+
+    console.log (data.message || 'Login successful.');
+
+
+
+    
+    document.getElementById('loginForm').style.display = 'none';
+
+    welcomeBox.textContent = `Welcome "${userId}" !`;
+    welcomeBox.style.backgroundColor = '#4CAF50'; // 성공 시 녹색
+    welcomeBox.style.display = 'block';
+
+    localStorage.setItem('userId', userId);
+    hideResponseBox();
+
+  } catch (err) {
+    console.error('Login error:', err);
+
+    let errorMessage = 'An error occurred during login.';
+
+    if (err instanceof Error && err.message) {
+      try {
+        const parsedError = JSON.parse(err.message);
+
+        if (parsedError.status === 401) {
+          errorMessage = 'Invalid username or password.';
+        } else if (parsedError.status === 500) {
+          errorMessage = 'Internal server error. Please try again later.';
+        } else {
+          errorMessage = `Server error (${parsedError.status}): ${parsedError.error || 'Unknown error'}`;
+        }
+
+      } catch {
+        if (err.message.includes('Failed to fetch')) {
+          errorMessage = 'Unable to connect to the server. Please check your internet connection or try again later.';
+        } else {
+          errorMessage = 'Unexpected error: ' + err.message;
+        }
+      }
+
+    } else {
+      errorMessage = 'An unexpected error has occurred.';
+    }
+
+    welcomeBox.textContent = errorMessage;
+    welcomeBox.style.backgroundColor = '#f44336'; // 오류 시 빨간색
+    welcomeBox.style.display = 'block';
+
+    // 5초 후 다시 녹색 배경으로 복원
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+
+    hideResponseBox();
+  }
+});
+
+//회원기입
+document.getElementById('signUpSubmitBtn').addEventListener('click', async () => {
+  const userId = document.getElementById('signUpId').value.trim();
+  const userPw = document.getElementById('signUpPw').value.trim();
+  const valid = /^[A-Za-z0-9]{8,16}$/;
+  const welcomeBox = document.getElementById('welcomeBox');
+
+  if (userId === userPw) {
+    welcomeBox.textContent = '[Sign Up] Username and password cannot be the same.';
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+    return;
+  }
+
+  if (!valid.test(userId) || !valid.test(userPw)) {
+    welcomeBox.textContent = '[Sign Up] Username/Password must be 8–16 alphanumeric characters.';
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+    return;
+  }
+
+  try {
+    showResponseBox('Signing up');
+
+    const res = await fetch(`${PROXY_BASE}/signUp`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ userId, userPw })
+    });
+
+    const data = await res.json();
+    printDebugLog(data);
+
+    if (!res.ok) {
+      if (res.status === 409) {
+        welcomeBox.textContent = `The ID "${userId}" is already taken. Please choose another one.`;
+      } else if (res.status === 500) {
+        welcomeBox.textContent = `Sign up failed due to a server error.`;
+      } else {
+        welcomeBox.textContent = `Sign up failed: ${data.message || 'Unknown error.'}`;
+      }
+
+      welcomeBox.style.backgroundColor = '#f44336';
+      welcomeBox.style.display = 'block';
+      setTimeout(() => {
+        welcomeBox.style.backgroundColor = '#4CAF50';
+      }, 5000);
+
+      hideResponseBox();
+      return;
+    }
+
+    // 회원가입 성공
+    welcomeBox.textContent = `Sign up successful. Your ID is "${userId}". Please log in.`;
+    welcomeBox.style.backgroundColor = '#4CAF50';
+    welcomeBox.style.display = 'block';
+
+    document.getElementById('signUpForm').style.display = 'none';
+    hideResponseBox();
+
+  } catch (err) {
+    console.error('Sign up error:', err);
+    welcomeBox.textContent = `Sign up error: ${err.message}`;
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+    hideResponseBox();
+  }
+});
+
+// Search Maps function
+
+// Search Maps function
+async function mapSearch() {
+  const welcomeBox = document.getElementById('welcomeBox');
+
+  const listDiv = document.getElementById('mapList');
+  listDiv.style.display = 'block';
+  listDiv.innerHTML = '';
+
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = 'Close Search Result';
+  closeBtn.style.marginBottom = '10px';
+  closeBtn.onclick = () => {
+    listDiv.innerHTML = '';
+    listDiv.style.display = 'none';
+  };
+  listDiv.appendChild(closeBtn);
+
+  try {
+    // fetch PRIVATE and PUBLIC maps separately
+    const fetchMaps = async (accessType) => {
+      const res = await fetch(`${PROXY_BASE}/map/search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ accessType })
+      });
+      const result = await res.json();
+      printDebugLog(result);
+      let maps = [];
+      try {
+        const raw = result.debugLog?.rawResponse;
+        if (raw) maps = JSON.parse(raw);
+      } catch (e) {
+        console.warn('Failed to parse map data:', e);
+      }
+      return maps;
+    };
+
+    const privateMaps = await fetchMaps('PRIVATE');
+    const publicMaps = await fetchMaps('PUBLIC');
+    const combinedMaps = [...privateMaps, ...publicMaps];
+
+    // remove duplicate maps (by map.id)
+    const uniqueMaps = [];
+    const seen = new Set();
+    combinedMaps.forEach(map => {
+      if (!seen.has(map.id)) {
+        seen.add(map.id);
+        uniqueMaps.push(map);
+      }
+    });
+
+    if (uniqueMaps.length === 0) {
+      const emptyMsg = document.createElement('div');
+      emptyMsg.innerHTML = '<h3 style="color: white;">No maps found.</h3>';
+      listDiv.appendChild(emptyMsg);
+      return;
+    }
+
+    uniqueMaps.forEach(map => {
+      const item = document.createElement('div');
+      item.className = 'map-item';
+      item.innerHTML = `
+        <span><strong>ID:</strong> ${map.owner}</span>
+        <span><strong>Name:</strong> ${map.mapName}</span>
+        <span><strong>Access:</strong> ${map.accessType}</span>
+        <div class="map-actions">
+          <button class="downloadBtn" data-id="${map.id}" data-name="${map.mapName}">[Download]</button>
+          <button class="deleteBtn" data-id="${map.id}" data-name="${map.mapName}">[Delete]</button>
+        </div>
+      `;
+      listDiv.appendChild(item);
+    });
+
+  } catch (err) {
+    console.error('Map search error:', err);
+    welcomeBox.textContent = 'Map search failed.';
+    welcomeBox.style.backgroundColor = '#f44336';
+    welcomeBox.style.display = 'block';
+    setTimeout(() => {
+      welcomeBox.style.backgroundColor = '#4CAF50';
+    }, 5000);
+  }
+}
+
+
+// Download / Delete buttons
+document.addEventListener('click', async (e) => {
+  const welcomeBox = document.getElementById('welcomeBox');
+
+  // 다운로드 버튼 클릭 처리
+  if (e.target.classList.contains('downloadBtn')) {
+    const id = e.target.dataset.id;
+    const name = e.target.dataset.name;
+
+    try {
+      const res = await fetch(`${PROXY_BASE}/map/provide`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ mapDataId: id, mapName: name })
+      });
+
+      if (!res.ok) throw new Error('Download failed.');
+
+      const blob = await res.blob();
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${name}.txt`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    } catch (err) {
+      welcomeBox.textContent = `Download failed: ${err.message}`;
+      welcomeBox.style.backgroundColor = '#f44336';
+      welcomeBox.style.display = 'block';
+      setTimeout(() => {
+        welcomeBox.style.backgroundColor = '#4CAF50';
+      }, 5000);
+    }
+  }
+
+  // 삭제 버튼 클릭 처리
+  if (e.target.classList.contains('deleteBtn')) {
+    const id = e.target.dataset.id;
+    const name = e.target.dataset.name;
+
+    // 사용자 확인 welcomeBox로 처리
+    welcomeBox.textContent = `Deleting map '${name}'...`;
+    welcomeBox.style.backgroundColor = '#FF9800'; // 주황색
+    welcomeBox.style.display = 'block';
+
+    try {
+      const res = await fetch(`${PROXY_BASE}/map/remove`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ mapDataId: id, mapName: name })
+      });
+
+      if (!res.ok) {
+        const errResult = await res.json().catch(() => ({}));
+        throw new Error(errResult.message || 'You do not have permission to delete this map.');
+      }
+
+      const result = await res.json();
+      welcomeBox.textContent = result.message || 'Delete successful.';
+      welcomeBox.style.backgroundColor = '#4CAF50'; // 초록
+      welcomeBox.style.display = 'block';
+
+
+     
+    } catch (err) {
+      welcomeBox.textContent = `Delete failed: ${err.message}`;
+      welcomeBox.style.backgroundColor = '#f44336'; // 빨강
+      welcomeBox.style.display = 'block';
+    } finally {
+      setTimeout(() => {
+        welcomeBox.style.backgroundColor = '#4CAF50';
+      }, 5000);
+    }
+      document.getElementById('mapList').style.display = 'block'; // 삭제 후에도 맵 목록 다시 표시
+      await mapSearch(); // 삭제 후 목록 다시 조회
+
+  }
+});
+
+
+    // Function to show response box with action message for 5 seconds and dynamic dots
+const showResponseBox = (action) => {
+  const responseBox = document.getElementById('responseBox');
+  responseBox.style.display = 'block';
+  responseBox.textContent = `${action}`; // Start with the action without dots
+
+  let dots = 0;
+  const responseDot = setInterval(() => {
+    dots = (dots + 1) % 6; // Loop through 1 to 5 dots
+    responseBox.textContent = `${action}${'.'.repeat(dots)}`; // Append dots to action
+  }, 500); // Every 500ms, add a dot
+
+  // Hide the response box after 5 seconds
+  setTimeout(() => {
+    clearInterval(responseDot); // Clear the dot interval
+    responseBox.style.display = 'none'; // Hide the response box
+  }, 5000); // 5000 ms = 5 seconds
+};
+
+
+// Function to hide response box immediately (not needed in this case, but kept for completeness)
+const hideResponseBox = () => {
+  const responseBox = document.getElementById('responseBox');
+  responseBox.style.display = 'none';
+};
+
+  });
+
+// 로그인 폼 닫기
+document.getElementById('loginCloseBtn').addEventListener('click', () => {
+  document.getElementById('loginForm').style.display = 'none';
+});
+
+// 회원가입 폼 닫기
+document.getElementById('signUpCloseBtn').addEventListener('click', () => {
+  document.getElementById('signUpForm').style.display = 'none';
+});
+  
+</script>
+
+
+</html>
