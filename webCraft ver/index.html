@@ -33,7 +33,7 @@
     /* ASCII Dancer 스타일 */
     #ascii-dancer {
       font-size: 28px;
-      color:white;
+      color: white;
       line-height: 1.6em;
       white-space: pre;
       height: 6em;
@@ -69,10 +69,8 @@
   <!-- ASCII Dancer 추가 -->
   <div id="ascii-dancer"></div>
 
-  <!-- Developer note 추가 -->
-  <div id="developer-note">
-    2025-05-27 [ Developer's Note ] Hello, players! Current Version: 3.0
-  </div>
+  <!-- Developer note 추가 (내용은 JS에서 넣어줌) -->
+  <div id="developer-note"></div>
 
   <!-- 기존 start() 기능 -->
   <script>
@@ -81,7 +79,7 @@
     }, 700);
 
     function start(){
-        confirm("팝업,쿠키 허용해주세요, 로그인 안될시 캐시 초기화 바랍니다.\n백엔드,프록시 서버는 최초 접속시 응답 요청후 1분내로 켜집니다.\n일일 트래픽 초과시 당일 접속 불가합니다.\nPC, 크룸(권장)브라우저,\n이동 : 키보드 ↑ ↓ ← →, 공격:a, 포션:1\n자세한 사항은 게임 블로그를 확인해주세요\n\n5초후 이동됩니다.");
+        confirm("팝업,쿠키 허용해주세요, 로그인 안될시 캐시 초기화 바랍니다.\n백엔드,프록시 서버는 최초 접속시 응답 요청후 1분내로 켜집니다.\n일일 트래픽 초과시 당일 접속 불가합니다.\nPC, 크롬(권장) 브라우저,\n이동 : 키보드 ↑ ↓ ← →, 공격:a, 포션:1\n자세한 사항은 게임 블로그를 확인해주세요\n\n5초후 이동됩니다.");
         setTimeout(function(){
             // 팝업 창 열기
             var popup = window.open("game/webCraft3.0.html", "_self", "width=3000,height=2000,left=100,top=0");
@@ -127,6 +125,21 @@
 
       dancer.style.transform = `translate(calc(-50% + ${shiftX}px), calc(-50% + ${shiftY}px))`;
     }, 300);
+  </script>
+
+  <!-- Developer note 랜덤 대사 설정 -->
+  <script>
+    const devNotes = [
+      "Prepare your tools and get ready to build your world!",
+      "Every block counts. Craft wisely and explore endlessly!",
+      "Welcome back, adventurer! Your world awaits.",
+      "No bugs... only features! Have fun crafting. ",
+      "Keep calm and start crafting your masterpiece!"
+    ];
+
+    const randomNote = devNotes[Math.floor(Math.random() * devNotes.length)];
+    document.getElementById("developer-note").innerText =
+      `[ Hello world ! ] ${randomNote}`;
   </script>
 
 </body>
