@@ -1,46 +1,81 @@
-
 <!DOCTYPE html>
+<html lang="ko">
 <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="game.webCraft.kro.kr">
+  <meta property="og:image" content="game/titleImg/url_img2.jpg">
+  <meta property="og:description" content="webCraft3.0">
+  <meta property="og:site_name" content="terraria">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <title>WebCraft StartPage 3.0 + ASCII Dancer</title>
+
+  <style>
+    /* WebCraft 시작 페이지 스타일 */
+    .startScreen {
+      width: 100%;
+      height: 100%;
+      border: 0px black solid;
+      color: white;
+      position: fixed;
+      object-fit: contain;
+      z-index: 4;
+      background-color: skyblue;
+      background-size: 100% 100%;
+      background-image: url('game/titleImg/backimg.jpg');
+    }
+
+    /* ASCII Dancer 스타일 */
+    #ascii-dancer {
+      font-size: 28px;
+      color:white;
+      line-height: 1.6em;
+      white-space: pre;
+      height: 6em;
+      text-align: center;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-in-out;
+      font-family: monospace;
+      z-index: 5; /* startScreen 위에 표시 */
+    }
+
+    /* Developer note 스타일 */
+    #developer-note {
+      position: absolute;
+      margin-top: 40%;
+      width: 100%;
+      text-align: center;
+      font-size: 20px;
+      color: white;
+      z-index: 5;
+      font-family: monospace;
+    }
+  </style>
 </head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:type" content="website">
-<meta property="og:url" content="game.webCraft.kro.kr">
-<meta property="og:image" content="game/titleImg/url_img2.jpg">
-<meta property="og:description" content="webCraft3.0">
-<meta property="og:site_name" content="terraria">
-<meta property="og:locale" content="en_US">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
 
-
-<title>WebCraft StartPage 3.0</title>
-<style>
-    /*웹 크레프트 시작 페이지 버튼 클릭용 + 배경화면 용*/
-
-.startScreen {
-    width: 100%;
-    height: 100%;
-    border: 0px black solid;
-    color: white;
-    position: fixed;
-    object-fit: contain;
-    z-index: 4;
-    background-color: skyblue;
-    background-size: 100% 100%;
-    background-image: url('game/titleImg/backimg.jpg');
-}
-</style>
 <body topmargin="0" leftmargin="0">
 
-    <div class="startScreen">
+  <!-- WebCraft 시작 화면 -->
+  <div class="startScreen"></div>
 
-    </div>
+  <!-- ASCII Dancer 추가 -->
+  <div id="ascii-dancer"></div>
 
-</body>
+  <!-- Developer note 추가 -->
+  <div id="developer-note">
+    2025-05-27 [ Developer's Note ] Hello, players! Current Version: 3.0
+  </div>
 
-<script>
+  <!-- 기존 start() 기능 -->
+  <script>
     setTimeout(function(){
         start();
     }, 700);
@@ -57,7 +92,42 @@
             }
         }, 5000);
     }
-</script>
+  </script>
 
+  <!-- ASCII Dancer 애니메이션 -->
+  <script>
+    const dancer = document.getElementById("ascii-dancer");
+
+    const frames = [
+      "(＾▽＾)", "(≧◡≦)", "(｡♥‿♥｡)", "(•̀ᴗ•́)و", "(´｡• ω •｡)", "(o^▽^o)",
+      "(⊃｡•́‿•̀｡)⊃", "(｡•̀ᴗ-)✧", "(╯✧▽✧)╯", "( ´ ▽ ` )", "(>‿<)", "(✿◕‿◕)",
+      "(｡•́‿•̀｡)", "(・∀・)", "(づ｡◕‿‿◕｡)づ", "(^_^)", "(^ω^)", "(◕‿◕)",
+      "(^з^)-☆", "(≧ω≦)", "(^ワ^＝)", "(ノ^_^)ノ", "(^-^*)", "(●’◡’●)",
+      "(・ω・)", "(´∩｡• ᵕ •｡∩`)", "(^O^)", "(≧∀≦)", "(๑˃̵ᴗ˂̵)", "(⁀ᗢ⁀)"
+    ];
+
+    let index = 0;
+    let shiftX = 0;
+    let shiftY = 0;
+    let directionX = 1;
+    let directionY = 1;
+
+    setInterval(() => {
+      dancer.textContent = frames[index];
+      index = (index + 1) % frames.length;
+
+      // 좌우 흔들림
+      shiftX += directionX;
+      if (shiftX > 3 || shiftX < -3) directionX *= -1;
+
+      // 위아래 점프 느낌 (강도 랜덤 1~3배)
+      const jumpStrength = Math.floor(Math.random() * 6) + 1;
+      shiftY = directionY > 0 ? -5 * jumpStrength : 0;
+      directionY *= -1;
+
+      dancer.style.transform = `translate(calc(-50% + ${shiftX}px), calc(-50% + ${shiftY}px))`;
+    }, 300);
+  </script>
+
+</body>
 </html>
-
