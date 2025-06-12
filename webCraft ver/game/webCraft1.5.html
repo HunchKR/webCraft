@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<head>
+  <title>webCraft version1.5</title>
+  <link rel="icon" type="image/png" href="https://terraria.org/favicon.ico">
+  
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Crimson+Text&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sevillana&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caramel&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caramel&family=Kanit:ital,wght@1,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caramel&family=Kanit:ital,wght@1,100&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Vinyl&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+
+
+    /*무한맵 크기 가로 3900px 세로1800px 설정*/
+body{
+    background-color: black;
+    width:9000px;
+    height:4500px;
+    margin:0px;
+    padding:0px;
+     cursor: url('cur/cur531.cur'), auto !important;
+
+       overflow: auto;
+  overscroll-behavior: none;
+  backface-visibility: hidden;
+
+   /*https://www.cursors-4u.com/cursor/2008/12/17/cool-red-outer-glow-pointer.html*/
+}
+
+    /*웹 가로,세로 스크룰바 삭제*/
+body::-webkit-scrollbar{
+    display:none;
+}
+
+html {
+  scroll-behavior: smooth;
+
+}
+html,body{
+    font-family: 'Kanit', serif;
+    /*기본 폰트 수정*/
+    font-size:100%;
+}
+
+/*메인 인터베이스 박스 가로 세로값은 body 설정한값과 동일*/
+.mainBox{
+     position: absolute;
+    width:9000px;
+    height:4500px;
+    border:1px black solid;
+    padding :0px;
+    margin :0px;
+    text-align: center;
+    overflow: hidden;
+
+       background-color: black; /*블럭 이미지  여백 뒷공간 색*/
+
+  transform: translateZ(0);
+  will-change: transform;
+
+}
+
+.mainBox::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: inherit;
+  background-size: cover;
+  filter: brightness(var(--time-brightness, 1));
+  z-index: -1;
+}
+
+
+/*박스안 그림자 - 미사용중*/
+.mainBoxShadowLeft{
+    position: fixed;
+    width:300px;
+    height:100%;
+    border:1px solid black;
+    margin-top: 140px;
+    margin-left: 140px;
+    z-index: 2;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.itemBag{
+    position: fixed;
+    width:297px;
+    height:65px;
+    border:1px solid black;
+    z-index:991;
+    margin-top: 60px;
+    margin-left: 70px;
+    background-color: rgba(255,255,255,0);
+}
+
+.mainBoxTop{
+    position:fixed;
+    width:100px;
+    height:50px;
+    z-index:991;
+    border:1px black solid;
+    margin-left:70px;
+    padding:0px;
+    font-size: 18px;
+    text-align: center;
+    color:black;
+    overflow: hidden;
+    word-break:break-all;
+    background-color: rgba(255,255,255,0);
+}
+.dayTimeBox{
+position : fixed;
+width :100px;
+height:50px;
+z-index:991;
+border : 1px black solid;
+margin-left:180px;
+padding:0px;
+font-size:18px;
+text-align:center;
+color:black;
+background-color: rgba(255,255,255,0);
+overflow: hidden;
+word-break: break-all;
+}
+.hpBox{
+position : fixed;
+width :80px;
+height:15px;
+z-index:991;
+border : 1px white solid;
+margin-left:293px;
+padding:0px;
+font-size:10px;
+text-align:center;
+color:white;
+background-color: red;
+overflow: hidden;
+word-break: break-all;
+}
+.manaBox{
+position : fixed;
+width :50px;
+height:15px;
+z-index:991;
+border : 1px white solid;
+margin-left:293px;
+margin-top:20px;
+padding:0px;
+font-size:10px;
+text-align:center;
+color:white;
+background-color: blue;
+overflow: hidden;
+word-break: break-all;
+}
+.selectedBlockDisplay{
+position : fixed;
+width :50px;
+height:50px;
+z-index:991;
+border : 1px black solid;
+margin-left:400px;
+margin-top:0px;
+padding:0px;
+font-size:12px;
+text-align:center;
+color:black;
+background-color:rgba(255,255,255,0);
+overflow: hidden;
+word-break: break-all;
+background-size:cover;
+}
+.goHome{
+position : fixed;
+width :50px;
+height:50px;
+z-index:991;
+border : 1px black solid;
+margin-left:5px;
+margin-top:0px;
+padding:0px;
+font-size:12px;
+text-align:center;
+color:black;
+background-color:rgba(255,255,255,0);
+overflow: hidden;
+word-break: break-all;
+background-size:cover;
+}
+    .goHome:hover{
+        opacity:1;
+        transform: scale(1.1);
+        border:1px solid grey;
+        color : yellow;
+        cursor : pointer;
+    }
+    .goHome:active{
+        transform: scale(0.9);
+        color : yellow;
+        cursor : grabbing;
+    }
+
+.fullScreen{
+position : fixed;
+width :50px;
+height:50px;
+z-index:991;
+border : 1px black solid;
+margin-left:5px;
+margin-top:60px;
+padding:0px;
+font-size:12px;
+text-align:center;
+color:black;
+background-color:rgba(255,255,255,0);
+overflow: hidden;
+word-break: break-all;
+background-size:cover;
+    }
+
+    .fullScreen:hover{
+        opacity:1;
+        transform: scale(1.1);
+        border:1px solid grey;
+        color : yellow;
+        cursor : pointer;
+    }
+    .goHome:active{
+        transform: scale(0.9);
+        color : yellow;
+        cursor : grabbing;
+    }
+
+.goLeft{
+position: fixed;
+width:30px;
+height:30px;
+
+
+margin-left:659px;
+margin-top:40px;
+border: 1px white solid;
+color : white;
+font-size: 12px;
+padding-left: 10px;
+padding-top: 10px;
+background-color: black;
+}
+    .goLeft:hover{
+        opacity:1;
+        transform: scale(1.1);
+        border:1px solid grey;
+        color : yellow;
+        cursor : pointer;
+    }
+    .goLeft:active{
+    transform: scale(0.9);
+        color : yellow;
+        cursor : grabbing;
+    }
+
+
+.goRight{
+position: fixed;
+width:30px;
+height:30px;
+margin-left:740px;
+margin-top:40px;
+border: 1px white soid;
+color : white;
+font-size: 12px;
+padding-left: 10px;
+padding-top: 10px;
+background-color: black;
+}
+    .goRight:hover{
+        opacity:1;
+        transform: scale(1.1);
+        border:1px solid grey;
+        color : yellow;
+        cursor : pointer;
+    }
+    .goRight:active{
+        transform: scale(0.9);
+        color : yellow;
+        cursor : grabbing;
+    }
+
+
+.goUp{
+position: fixed;
+width:30px;
+height:30px;
+margin-left:700px;
+border: 1px white soid;
+color : white;
+font-size: 12px;
+padding-left: 10px;
+padding-top: 10px;
+background-color: black;
+}
+    .goUp:hover{
+        opacity:1;
+        transform: scale(1.1);
+        border:1px solid grey;
+        color : yellow;
+        cursor : pointer;
+    }
+    .goUp:active{
+        transform: scale(0.9);
+        color : yellow;
+        cursor : grabbing;
+     }
+
+
+.goDown{
+position: fixed;
+width:30px;
+height:30px;
+margin-left:700px;
+margin-top:40px;
+border: 1px white soid;
+color : white;
+font-size: 12px;
+padding-left: 10px;
+padding-top: 10px;
+background-color: black;
+}
+    .goDown:hover{
+        opacity:1;
+        transform: scale(1.1);
+        border:1px solid grey;
+        color : yellow;
+        cursor : pointer;
+    }
+    .goDown:active{
+         transform: scale(0.9);
+        color : yellow;
+        cursor : grabbing;
+    }
+
+.tableBox{
+border-spacing: 0;
+border-style: none;
+}
+
+
+.titlePad{
+width:30px;
+height:30px;
+padding:0px;
+margin:0px;
+color:red;
+text-align: center;
+font-size: 1px;
+border-spacing: 0;
+border-style:none;
+color:rgba(255,255,255,0);
+overflow:hidden;
+word-break: break-all;
+
+    
+}
+    .tilePad:hover{
+         opacity:1;
+        color:rgba(255,255,255,0);
+        transform: scale(1.15);
+        border:1px solid red;
+        cursor : pointer; 
+    }
+ .tilePad:active{
+         opacity:0.9;
+        transform: scale(0.9);
+        border:1px solid orange;
+        cursor : grabbing;
+    }
+
+.itemPad{
+width:100%;
+height: 100%;
+font-size:10px;
+border-spacing: 0;
+border-style: none;
+color:white;
+   
+
+}
+.itemPadIn:hover{
+      cursor: url('cur/cur117.cur'), pointer !important;
+}
+.itemPadIn{
+    width:30px;
+    height:30px;
+    padding:0px;
+    margin:0px;
+    color:white;
+    text-align: center;
+    font-size: 10px;
+    border-spacing: 0;
+    border-style:none;
+    overflow:hidden;
+    word-break: break-all;
+       background-repeat: round; 
+        background-position:center; 
+
+        filter: brightness(1);
+        opacity: 1;
+
+    }
+        .itemPadIn:hover{
+        opacity:1;
+        transform: scale(1.05);
+        border:1px solid yellow;
+        color : yellow;
+        cursor : pointer;
+        }
+        .itemPadIn:active{
+        opacity:0.9;
+        transform: scale(0.95);
+        border:1px solid orange;
+        cursor : grabbing;
+        }
+
+.b1b  { background-image: url("img/1.bmp"); background-size: 30px 33px; }
+.b2b  { background-image: url("img/2.bmp"); background-size: 30px 33px; filter: brightness(0.55); }
+.b3b  { background-image: url("img/3.bmp"); background-size: 30px 33px; filter: brightness(0.5); }
+.b4b  { background-image: url("img/4.bmp"); background-size: 30px 33px; }
+.b5b  { background-image: url("img/5.bmp"); background-size: 30px 33px; filter: brightness(0.2); }
+.b6b  { background-image: url("img/6.png"); background-size: 30px 33px; filter: brightness(0.45); }
+.b7b  { background-image: url("img/8.png"); background-size: 30px 33px; filter: opacity(0.1); }
+.b10b { background-image: url("img/10.png"); background-size: 30px 33px; filter: brightness(0.18); }
+.b11b { background-image: url("img/11.png"); background-size: 30px 33px; filter: brightness(0.25); }
+.b12b { background-image: url("img/12.png"); background-size: 30px 33px; filter: brightness(0.25); }
+.b13b { background-image: url("img/13.png"); background-size: 30px 33px; filter: brightness(0.25); }
+.b14b { background-image: url("img/14.png"); background-size: 30px 33px; filter: brightness(0.25); }
+.b15b { background-image: url("img/15.bmp"); background-size: 30px 33px; }
+.b16b { background-image: url("img/16.bmp"); background-size: 30px 33px; }
+.b17b { background-image: url("img/17.bmp"); background-size: 30px 33px; filter: brightness(0.95); }
+.b18b { background-image: url("img/18.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b19b { background-image: url("img/19.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b20b { background-image: url("img/20.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b21b { background-image: url("img/21.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b22b { background-image: url("img/22.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b23b { background-image: url("img/23.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b24b { background-image: url("img/24.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b25b { background-image: url("img/25.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b26b { background-image: url("img/26.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b27b { background-image: url("img/27.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b28b { background-image: url("img/28.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b29b { background-image: url("img/29.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b30b { background-image: url("img/30.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b31b { background-image: url("img/31.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b32b { background-image: url("img/32.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b33b { background-image: url("img/33.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b34b { background-image: url("img/34.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b35b { background-image: url("img/35.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b36b { background-image: url("img/36.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b37b { background-image: url("img/37.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b38b { background-image: url("img/38.bmp"); background-size: 30px 33px; filter: brightness(0.9); }
+.b46b { background-image: url("img/46.gif"); background-size: 30px 33px; filter: brightness(0.9); }
+.b47b { background-image: url("img/47.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b48b { background-image: url("img/48.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b49b { background-image: url("img/49.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b50b { background-image: url("img/50.png"); background-size: 30px 33px; filter: brightness(1); }
+.b51b { background-image: url("img/51.png"); background-size: 30px 33px; filter: brightness(0.2); }
+.b52b { background-image: url("img/52.png"); background-size: 30px 33px; filter: brightness(0.2); }
+.b53b { background-image: url("img/53.png"); background-size: 30px 33px; filter: brightness(0.2); }
+.b54b { background-image: url("img/54.gif"); background-size: 30px 33px; filter: brightness(1); }
+.b57b { background-image: url("img/57.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b58b { background-image: url("img/58.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b59b { background-image: url("img/59.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b60b { background-image: url("img/60.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b61b { background-image: url("img/61.png"); background-size: 30px 33px; filter: brightness(0.9); }
+.b62b {background-size: 30px 33px; opacity: 0; visibility: hidden;}/*투명칸 (블럭 아님)*/
+
+
+
+.b55b {
+  background: linear-gradient(180deg, #082c6d 60%, #082c6d 100%);
+  animation: waterFlow 3s infinite linear;
+  border: none !important;
+  box-shadow: none !important;
+  position: relative;
+  overflow: hidden;
+}
+.b56b {
+    background: #fff;
+    opacity: 0.85;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #a59e9e, 0 0 30px #a59e9e;
+    animation: cloudFloat 1s linear infinite;
+    background-color: white;
+}
+@keyframes cloudFloat {
+    0% { filter: blur(0px);}
+    50% { filter: blur(2px);}
+    100% { filter: blur(0px);}
+}
+
+
+
+.b1b, .b2b, .b3b, .b4b, .b48b, .b61b, .b10b, .b11b, .b12b,
+.b13b, .b14b, .b46b, .b54b, .b52b, .b49b, .b50b, .b51b, .b56b {
+    filter: brightness(0.85);
+}
+
+
+/*https://terraria.wiki.gg/wiki/Category:Placed_block_images*/
+/*테이블 데이터 내부값*/
+.td{
+    border-spacing: 0;
+    border-style: none;
+    
+}
+
+/*미사용*/
+.backpack{
+    border:1px black solid;
+}
+
+/*
+zindex 값 (높을수록 요소가 위로 우선순위 표시)
+기본 - mainBox
+2 - mainBoxSadow , mainBoxTop
+3 - item box
+
+#viewport-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 990;
+  
+
+
+
+  backdrop-filter: blur(40px);
+  background-color: rgba(0, 0, 0, 0.8);
+  
+  
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    transparent 150px, 
+    black 151px      
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    transparent 150px,
+    black 151px
+  );
+
+    transition: 
+    -webkit-mask-position 0.16s cubic-bezier(0.33, 1, 0.68, 1),
+    mask-position 0.16s cubic-bezier(0.33, 1, 0.68, 1);
+
+}
+<div id="viewport-spotlight"></div>
+
+.mainBox td {
+  pointer-events: none;
+}
+
+.mainBox td[data-in-view="true"] {
+  pointer-events: auto;
+}
+
+*/
+
+/*음악 실행을 위해 스타트 버튼 항목(자동실행 불가능)*/
+
+.startScreen {
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(160deg, #1d2c41 0%, #4FA3F0 100%),
+        repeating-linear-gradient(
+            45deg,
+            rgba(255,255,255,0.1) 0px,
+            rgba(255,255,255,0.1) 20px,
+            transparent 20px,
+            transparent 40px
+        );
+    animation: skyAnimation 100s linear infinite;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+@keyframes skyAnimation {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 10000px 5000px, 2000px 2000px; }
+}
+
+
+/* 공식 테라리아 버튼 스타일 */
+.startBtn {
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 80px;
+
+    border: 4px solid skyblue;
+    border-radius: 8px;
+    color:skyblue;
+    background-color: rgba(255,255,255,0);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    text-shadow: 2px 2px 0 #000;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+}
+
+.startBtn:hover {
+    transform: translateX(-50%) scale(1.05);
+      cursor: url('cur/cur117.cur'), pointer !important;
+}
+
+.startBtn:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+:fullscreen {
+  overflow: auto !important;
+}
+
+
+</style>
+<body ondragstart="return false" onselectstart="return false" contextmenu="return false">
+
+<div class="startScreen">
+
+    <button class="startBtn" onclick="removeStartPage();">
+        <span>▶ START JOURNEY</span>
+    </button>
+</div>
+
+
+    <div class="goLeft"onclick="moveScreen('left');alert('미완성');">left</div>
+    <div class="goRight"onclick="moveScreen('right');alert('미완성');">right</div>
+    <div class="goUp"onclick="moveScreen('up');alert('미완성');">up</div>
+    <div class="goDown"onclick="moveScreen('down');alert('미완성');">down</div>
+    <div class="selectedBlockDisplay"title="선택된 블럭을 보여줍니다.">0</div>
+    <div class="goHome"onclick="goHomeScreen();"title="스폰 포인트로 이동합니다.">Spawn<br>point</div>
+    <div class="fullScreen"onclick="fullScreen();"title="전체화면으로 변경합니다.">Full<br>Screen</div>
+     <div class="mainBoxTop"title="블럭 부수기 남은 시간을 보여줍니다."></div>
+     <div class="dayTimeBox"title="현재 플레이 타임을 보여줍니다."></div>
+       <div class="hpBox"title="체력 수치"></div>
+         <div class="manaBox"title="마력 수치"></div>
+
+
+    <div class="mainBox">
+
+        <table border='1'class='tableBox'>
+       
+        </table>
+        
+    </div>
+
+<div class="itemBag">
+    <table border='1' class="itemPad">
+        <tr>
+            <td class="itemPadIn b1b" id="i00" onclick="useBlock('i00','b1b',1)" data-stiffness="5" title="잔디">0</td>
+            <td class="itemPadIn b2b" id="i01" onclick="useBlock('i01','b2b',2)" data-stiffness="7" title="흙">0</td>
+            <td class="itemPadIn b3b" id="i02" onclick="useBlock('i02','b3b',3)" data-stiffness="15" title="진흙">0</td>
+            <td class="itemPadIn b4b" id="i03" onclick="useBlock('i03','b4b',4)" data-stiffness="10" title="나무">0</td>
+            <td class="itemPadIn b48b" id="i04" onclick="useBlock('i04','b48b',48)" data-stiffness="1" title="나뭇잎">0</td>
+            <td class="itemPadIn b61b" id="i05" onclick="useBlock('i05','b61b',61)" data-stiffness="50" title="던전가시">0</td>
+            <td class="itemPadIn b10b" id="i06" onclick="useBlock('i06','b10b',10)" data-stiffness="20" title="조약돌">0</td>
+            <td class="itemPadIn b11b" id="i07" onclick="useBlock('i07','b11b',11)" data-stiffness="0" title="철광석">0</td>
+            <td class="itemPadIn b12b" id="i08" onclick="useBlock('i08','b12b',12)" data-stiffness="500" title="루비">0</td>
+        </tr>
+        <tr>
+            <td class="itemPadIn b13b" id="i10" onclick="useBlock('i10','b13b',13)" data-stiffness="300" title="에메랄드">0</td>
+            <td class="itemPadIn b14b" id="i11" onclick="useBlock('i11','b14b',14)" data-stiffness="1000" title="다이아">0</td>
+            <td class="itemPadIn b46b" id="i12" onclick="useBlock('i12','b46b',46)" data-stiffness="9999" title="우주하늘">0</td>
+            <td class="itemPadIn b54b" id="i13" onclick="useBlock('i13','b54b',54)" data-stiffness="100" title="신비한블럭">0</td>
+            <td class="itemPadIn b52b" id="i14" onclick="useBlock('i14','b52b',52)" data-stiffness="400" title="흑요석">0</td>
+            <td class="itemPadIn b49b" id="i15" onclick="useBlock('i15','b49b',49)" data-stiffness="50" title="제작나무">0</td>
+            <td class="itemPadIn b50b" id="i16" onclick="useBlock('i16','b50b',50)" data-stiffness="75" title="벌통">0</td>
+            <td class="itemPadIn b51b" id="i17" onclick="useBlock('i17','b51b',51)" data-stiffness="30" title="꿀블럭">0</td>
+            <td class="itemPadIn b56b" id="i18" onclick="useBlock('i18','b56b',56)" data-stiffness="10" title="구름">0</td>
+        </tr>
+    </table> 
+</div>
+
+</body>
+
+
+
+<script>
+//var power =prompt("곡괭이 파워 입력 1~50");
+var power =1;//곡괭이 힘 (블럭 캐지는 속도)
+var globalInputElement=null;
+var globalBlockId;
+var globalBlockPower;
+var globalBlockOpacity;
+var defaultOpacity=0;
+var timeUpStart=false;
+var shadowCounterVal=150;
+     var ranSky=parseInt((Math.random()*6)+10);
+
+// 동굴 1 (가장 큰 동굴)
+var ranCave1X = parseInt(Math.random() * 200); // 0~199 (x축 유지)
+var ranCave1Y = parseInt(Math.random() * 40) + 55; // 55~94 (기존 35~74 → +20)
+var ranCave1XC = parseInt(Math.random() * 150) + 50; // 50~199 (너비 150~200 유지)
+var ranCave1YC = parseInt(Math.random() * 60) + 20; // 20~79 (높이 60~80 유지)
+
+// 동굴 2 (중형 동굴)
+var ranCave2X = parseInt(Math.random() * 200); // 0~199 
+var ranCave2Y = parseInt(Math.random() * 40) + 55; // 55~94
+var ranCave2XC = parseInt(Math.random() * 100) + 80; // 80~179 (너비 80~180 유지)
+var ranCave2YC = parseInt(Math.random() * 50) + 30; // 30~79 (높이 50~80 유지)
+
+// 동굴 3 (소형 동굴)
+var ranCave3X = parseInt(Math.random() * 200); // 0~199
+var ranCave3Y = parseInt(Math.random() * 40) + 55; // 55~94
+var ranCave3XC = parseInt(Math.random() * 80) + 60; // 60~139 (너비 60~140 유지)
+var ranCave3YC = parseInt(Math.random() * 40) + 40; // 40~79 (높이 40~80 유지)
+
+var oceanRan=parseInt((Math.random()*2)+1);//1~2
+
+var skyHeightPlus=20;
+
+
+    var bLoc;
+var bData1;
+var bData2;
+var bLocateData=[];
+makeWorld();
+var bLocateDataCounter=0;
+
+var timer;
+var timer2;
+var timer3;
+
+
+var time=0;
+var dayTime=0;
+var dayTimeMin=0;
+var dayTimeHour=parseInt(Math.random()*24);
+var usedBlockPosition=0;
+ var dayMusicType=parseInt((Math.random()*2)+1);
+
+ const musicA = new Audio("music/overworld_day.mp3");//기본 초원 배경음
+ const musicA2 = new Audio("music/overworld_day2.mp3");//기본 초원 배경음
+ const musicB = new Audio("music/overworld_night.mp3");//기본 초원 배경음
+
+    musicA.loop = true;//반복
+    musicA.playbackRate = 1.0;
+    
+    musicA2.loop = true;//반복
+    musicA.playbackRate = 1.0;
+
+    
+    musicB.loop = true;//반복
+    musicA.playbackRate = 1.0;
+
+
+    function MusicStartA(input){//크롬 브라우저에서 자동 실행은 안되니 클릭 이벤트로 음악 수동 실행
+      if(input=="startDay"){
+       
+        if(dayMusicType==1){
+        allStopMusic();
+        musicA.play();
+        }else if(dayMusicType==2){
+        allStopMusic();
+        musicA2.play();
+        }
+      }
+
+      else if(input=="stopDay"){
+        allStopMusic();
+        musicB.play();
+      }else{
+ console.log("잘못된 music input");
+      }
+   
+    }
+    function allStopMusic(){
+          musicB.pause();
+         musicA.pause();
+          musicA2.pause();
+    }
+
+     function removeStartPage(){//게임시작
+    document.querySelector(".startScreen").style.display="none";
+    document.querySelector(".startBtn").style.display="none";
+
+   
+  
+    //전체화면    
+//fullScreen();
+goHomeScreen();
+ document.body.focus();//포커스
+  document.body.setAttribute('tabindex', '-1');
+
+ 
+//게임시작시 시간 움직임
+timer=setInterval(timeUp,100);
+timer2=setInterval(dayTimeUp,200);
+timer3=setInterval(changeSkyPlus,5000);
+
+
+    changeSkyPlus();//맨처음 랜덤상태로 시간지정되었을때 하늘 상태 갱신
+       if(dayTimeHour>=12&&dayTimeHour<23){
+           MusicStartA("startDay");
+            changeTextColor("day");
+
+       }else{
+           MusicStartA("stopDay");
+            changeTextColor("night");
+
+
+       }
+
+ }
+function goHomeScreen(){
+     // 새 중앙 좌표 계산 (x:150, y:30.5)
+     const blockSize = 30;
+    const houseCenterX = 150 * blockSize; // 150 * 30 = 4500px
+    const houseCenterY = 45 * blockSize; // 915px
+    window.scrollTo(
+        houseCenterX - window.innerWidth/2, 
+        houseCenterY - window.innerHeight/2
+    );
+}
+function fullScreen() {
+  const elem = document.documentElement;
+  if (!document.fullscreenElement) {
+    (elem.requestFullscreen || 
+     elem.webkitRequestFullscreen || 
+     elem.mozRequestFullScreen || 
+     elem.msRequestFullscreen).call(elem);
+  } else {
+    (document.exitFullscreen || 
+     document.webkitExitFullscreen || 
+     document.mozCancelFullScreen || 
+     document.msExitFullscreen).call(document);
+  }
+}
+
+
+/*
+// JavaScript
+function updateViewportSpotlight() {
+  const spotlight = document.getElementById('viewport-spotlight');
+  const blockSize = 50; // 블록 크기 (px)
+  const viewSize = 50;  // 보이는 영역 크기 (블록 수)
+  
+  // 중앙 좌표 계산
+  const centerX = window.scrollX + window.innerWidth/2;
+  const centerY = window.scrollY + window.innerHeight/2;
+  
+  // 원형 마스크 반지름 = (블록 수 * 블록 크기) / 2
+  const radius = (blockSize * viewSize) / 2;
+  
+  // 마스크 위치 업데이트
+  spotlight.style.webkitMaskImage = `radial-gradient(
+    circle at center,
+    transparent ${radius}px,
+    black ${radius + 1}px
+  )`;
+  
+  spotlight.style.maskImage = `radial-gradient(
+    circle at center,
+    transparent ${radius}px,
+    black ${radius + 1}px
+  )`;
+  
+  // 블록 상호작용 업데이트
+  updateBlockInteractivity(centerX, centerY, blockSize, viewSize);
+}
+
+function updateBlockInteractivity(centerX, centerY, blockSize, viewSize) {
+  // 10x10 영역 내 블록만 상호작용 가능하도록 설정
+  document.querySelectorAll('.mainBox td').forEach(td => {
+    const rect = td.getBoundingClientRect();
+    const x = rect.left + rect.width/2 + window.scrollX;
+    const y = rect.top + rect.height/2 + window.scrollY;
+    
+    const radius = (blockSize * viewSize) / 2;
+    const distance = Math.sqrt(
+      Math.pow(x - centerX, 2) + 
+      Math.pow(y - centerY, 2)
+    );
+    
+    td.dataset.inView = distance <= radius;
+  });
+}
+
+// 스크롤 및 리사이즈 이벤트 리스너
+window.addEventListener('scroll', updateViewportSpotlight);
+window.addEventListener('resize', updateViewportSpotlight);
+
+// 초기화
+document.addEventListener('DOMContentLoaded', () => {
+  updateViewportSpotlight();
+});
+
+*/
+
+
+
+function makeWorld(){
+    var t = "<table border='1' class='tableBox'>";
+    for(var i=0; i<150; i++){ 
+        bLocateData[i] = new Array(i);
+        t += "<tr>";
+        
+        for(var j=0; j<300; j++){ 
+            numZ = "xy" + j.toString() + ',' + i.toString();
+            
+             const brightness=calculateDark(i);
+            const opacity = calculateDark2(i);
+
+            // 하늘 영역(y ≤ 32)과 잔디층(y=33) 밝기 100% 보존
+          
+            //하늘 영역(y≤52) 블록에 data-empty="true" 속성 자동 부여 빈공간으로 인식
+         
+            // ▼ 수정 코드 ▼
+t += `<td class='titlePad ${bLoc}' 
+     id='${numZ}' 
+     data-bid="${bData1}" // 추가
+     data-stiffness="${bData2}" // 추가
+     style="filter: brightness(${brightness});opacity:${opacity}"
+     data-empty="${i <= 52 ? 'true' : 'false'}"
+     onclick="clickBlock('${bData1}','${bData2}','${bLoc}',this,'${numZ}')">`
+
+            
+            randomBlock(j, i);//xLoc=j yLoc=i
+            bLocateData[i][j] = `${numZ+'id:'+bLoc}`;
+        }
+        t += "</tr>";
+    }
+    document.querySelector(".mainBox").innerHTML = t;
+}
+
+
+console.log(bLocateData);
+function calculateDark(y) {
+    // 우주 영역 (0~19): 점점 어두워짐
+    if (y <= 2) return 0.2;
+    else if (y <= 4) return 0.4;
+    else if (y <= 6) return 0.6;
+    else if (y <= 8) return 0.8;
+    else if (y <= 10) return 0.9;
+    else if (y <= 12) return 0.95;
+ 
+
+    // 밝은 하늘 영역 (20~53): 완전히 밝음
+    else if (y <= 53) return 1.0;
+
+    // 지하 영역 (54~150): 급격히 어두워짐 (세분화)
+    else if (y <= 57) return 0.4;
+    else if (y <= 62) return 0.35;
+    else if (y <= 67) return 0.3;
+    else if (y <= 72) return 0.25;
+    else if (y <= 77) return 0.2;
+    else if (y <= 82) return 0.18;
+    else if (y <= 87) return 0.16;
+    else if (y <= 94) return 0.14;
+    else if (y <= 104) return 0.12;
+    else if (y <= 114) return 0.10;
+    else if (y <= 124) return 0.09;
+    else if (y <= 134) return 0.08;
+    else if (y <= 144) return 0.07;
+    else return 0.06; // 145~150
+}
+//opacity투명도 설정
+function calculateDark2(y) {
+    // 우주 영역 (0~19): 점점 어두워짐
+    if (y <= 2) return 0.025;
+    if (y <= 4) return 0.05;
+    if (y <= 6) return 0.1;
+    if (y <= 8) return 0.15;
+    else if (y <= 10) return 0.2;
+    else if (y <= 12) return 0.3;
+    else if (y <= 14) return 0.4;
+    else if (y <= 16) return 0.5;
+
+
+    else return 1;
+}
+
+/*
+1.페이퍼잔디
+2.페이퍼흙
+3.페이퍼어두운흙
+4.페이퍼나무
+5.페이퍼나뭇잎
+6.흙
+10.조약돌
+11.철광석
+12.빛나는 루비
+13.에메랄드
+14.다이아
+15~28 하늘(24시간)
+
+46.우주하늘
+47.베드락
+48.나뭇잎
+49.제작나무
+50.벌통
+51.꿀블럭
+52.흑요석
+53.화강암
+54.파티블럭
+*/
+
+function blockCodeInput(blockName){
+  switch (blockName){
+    // 페이퍼 계열 블록
+    case "페이퍼잔디":   bLoc = "b1b";  bData1 = "1";  bData2 = "3";     break;
+    case "페이퍼흙":     bLoc = "b2b";  bData1 = "2";  bData2 = "4";     break;
+    case "페이퍼진흙":   bLoc = "b3b";  bData1 = "3";  bData2 = "7";     break;
+    case "페이퍼나무":   bLoc = "b4b";  bData1 = "4";  bData2 = "5";     break;
+    case "페이퍼나뭇잎": bLoc = "b5b";  bData1 = "5";  bData2 = "1";     break;
+    
+    // 자연 계열 블록
+    case "흙":         bLoc = "b6b";  bData1 = "6";  bData2 = "10";    break;
+    case "구름":       bLoc = "b7b";  bData1 = "7";  bData2 = "2";     break;
+    case "조약돌":     bLoc = "b10b"; bData1 = "10"; bData2 = "8";    break;
+     
+    // 광물 계열 블록
+    case "철광석":     bLoc = "b11b"; bData1 = "11"; bData2 = "0";    break;
+    case "루비":       bLoc = "b12b"; bData1 = "12"; bData2 = "50";    break;
+    case "에메랄드":   bLoc = "b13b"; bData1 = "13"; bData2 = "30";    break;
+    case "다이아":     bLoc = "b14b"; bData1 = "14"; bData2 = "100";   break;
+    
+    // 하늘 계열 블록 (15~28)
+    case "하늘":       bLoc = "b15b"; bData1 = "15"; bData2 = "1";   break;
+    case "우주하늘":   bLoc = "b46b"; bData1 = "46"; bData2 = "9999";   break;
+    
+    // 특수 블록
+    case "베드락":     bLoc = "b47b"; bData1 = "47"; bData2 = "9999999"; break;
+    case "나뭇잎":     bLoc = "b48b"; bData1 = "48"; bData2 = "1";      break;
+    case "제작나무":   bLoc = "b49b"; bData1 = "49"; bData2 = "5";      break;
+    case "벌통":       bLoc = "b50b"; bData1 = "50"; bData2 = "75";     break;
+    case "꿀블럭":     bLoc = "b51b"; bData1 = "51"; bData2 = "10";      break;
+    case "흑요석":     bLoc = "b52b"; bData1 = "52"; bData2 = "150";    break;
+    case "화강암":     bLoc = "b53b"; bData1 = "53"; bData2 = "60";     break;
+    case "파티블록":   bLoc = "b54b"; bData1 = "54"; bData2 = "5";     break;
+    case "바다":     bLoc = "b55b"; bData1 = "55"; bData2 = "9999";     break;
+    case "뉴구름":     bLoc = "b56b"; bData1 = "56"; bData2 = "1";     break;
+    
+    //던전블록
+     case "던전블록1":     bLoc = "b57b"; bData1 = "57"; bData2 = "30";     break;
+    case "던전블록2":   bLoc = "b58b"; bData1 = "58"; bData2 = "40";     break;
+    case "던전블록3":     bLoc = "b59b"; bData1 = "59"; bData2 = "50";     break;
+    case "던전블록4":     bLoc = "b60b"; bData1 = "60"; bData2 = "60";     break;
+    case "던전가시":     bLoc = "b61b"; bData1 = "61"; bData2 = "5";     break;
+
+
+    default:
+      console.log("block name is invalid");
+window.bData1 = bData1.toString(); // 숫자 ID 문자열로 변환
+window.bData2 = bData2.toString(); // 내구도 문자열로 변환
+  }
+}
+
+    
+
+
+function randomBlock(xLoc,yLoc){
+    var ran=parseInt((Math.random()*100));//1~9
+
+    var ranUp=parseInt((Math.random()*9));
+       var ranDown=parseInt((Math.random()*9));
+
+    var ranTree=parseInt((Math.random()*3)+46);//17~19
+    var ranTree2=parseInt((Math.random()*6));///나무높이//1~9
+
+      //var ranCave1X=parseInt((Math.random()*0));//10~19
+    //var ranCave1Y=parseInt((Math.random()*30)+30);//10~19
+
+
+
+if(yLoc<=52){
+         blockCodeInput("하늘");
+}
+
+    
+if(yLoc<=16){
+    if(ran>=0&&ran<1){
+        //blockCodeInput("하늘");
+        blockCodeInput("구름");
+
+}
+}
+
+
+//나무 나뭇잎 생성
+if(yLoc==(ranTree-(ranTree2))&&(xLoc>=50&&xLoc<=250)){
+       if(ran>=0&&ran<75){
+          blockCodeInput("나뭇잎");
+             //console.log("나뭇잎 배치 위치x,y"+xLoc+','+yLoc);
+       }
+
+    }
+    //나무
+
+if((yLoc>=ranTree&&yLoc<=52)){
+       
+randomBlockLoopY((ranTree-1),130,"b48b","b4b",xLoc,yLoc);//y좌표 1칸 위에 나뭇잎 있는지 확인
+
+//console.log(bLocateData[19][0]);
+
+    
+}  
+
+   
+//기존 땅 지형 생성
+if(oceanRan==1){
+if(yLoc==53&&(xLoc>=50)){
+           blockCodeInput("페이퍼잔디");
+
+    }
+}else if(oceanRan==2){
+if(yLoc==53&&(xLoc<=195)){
+           blockCodeInput("페이퍼잔디");
+
+    }
+}
+
+
+if(yLoc>=54&&yLoc<59){
+        if(ran>=0&&ran<50){
+           blockCodeInput("페이퍼흙");
+        }
+        if(ran>=0&&ran<13){
+           blockCodeInput("조약돌");
+        }
+        else{
+            if(yLoc==58){
+
+           blockCodeInput("조약돌");
+          
+        }
+    }
+}
+
+if(yLoc>=59&&yLoc<150){
+           blockCodeInput("조약돌");
+        
+}
+
+
+
+//동굴생성
+// 첫 번째 동굴: 흑요석과 루비 위주
+if((yLoc>=ranCave1Y&&(yLoc<ranCave1Y+ranCave1YC)&&(xLoc>=ranCave1X&&(xLoc<=ranCave1X+ranCave1XC)))){
+    const centerX = ranCave1X + ranCave1XC/2;
+    const centerY = ranCave1Y + ranCave1YC/2;
+    const dx = (xLoc - centerX) / (ranCave1XC/2);
+    const dy = (yLoc - centerY) / (ranCave1YC/2);
+    const distance = Math.sqrt(dx*dx + dy*dy);
+    const distortionFactor = 0.2;
+    const randomOffset = Math.sin(xLoc * 0.3) * Math.cos(yLoc * 0.3) * distortionFactor;
+    
+    if(distance + randomOffset <= 1.0) {
+        if(ran>=0&&ran<90) blockCodeInput("흑요석");
+        else blockCodeInput("루비");
+    }
+}
+
+// 두 번째 동굴: 화강암과 흑요석 위주
+if((yLoc>=ranCave2Y&&(yLoc<ranCave2Y+ranCave2YC)&&(xLoc>=ranCave2X&&(xLoc<=ranCave2X+ranCave2XC)))){
+    const centerX = ranCave2X + ranCave2XC/2;
+    const centerY = ranCave2Y + ranCave2YC/2;
+    const dx = (xLoc - centerX) / (ranCave2XC/2);
+    const dy = (yLoc - centerY) / (ranCave2YC/2);
+    const distance = Math.sqrt(dx*dx + dy*dy);
+    const distortionFactor = 0.2;
+    const randomOffset = Math.sin(xLoc * 0.3) * Math.cos(yLoc * 0.3) * distortionFactor;
+    
+    if(distance + randomOffset <= 1.0) {
+        if(ran>=0&&ran<90) blockCodeInput("화강암");
+        else blockCodeInput("흑요석");
+    }
+}
+
+// 세 번째 동굴: 벌통과 꿀블럭 위주
+if((yLoc>=ranCave3Y&&(yLoc<ranCave3Y+ranCave3YC)&&(xLoc>=ranCave3X&&(xLoc<=ranCave3X+ranCave3XC)))){
+    const centerX = ranCave3X + ranCave3XC/2;
+    const centerY = ranCave3Y + ranCave3YC/2;
+    const dx = (xLoc - centerX) / (ranCave3XC/2);
+    const dy = (yLoc - centerY) / (ranCave3YC/2);
+    const distance = Math.sqrt(dx*dx + dy*dy);
+    const distortionFactor = 0.2;
+    const randomOffset = Math.sin(xLoc * 0.3) * Math.cos(yLoc * 0.3) * distortionFactor;
+    
+    if(distance + randomOffset <= 1.0) {
+        if(ran>=0&&ran<90) blockCodeInput("벌통");
+        else blockCodeInput("꿀블럭");
+    }
+}56
+
+
+if(yLoc>=(65+ranUp/2)&&yLoc<100){
+
+        if(ran<7&&ran<11){
+           blockCodeInput("철광석");
+    
+        }
+    if(yLoc>=(100-ranDown)&&yLoc<(100+ranUp)){
+    if(ran>=0&&ran<4){
+           blockCodeInput("에메랄드");
+    
+    }
+}
+
+}
+if(yLoc>(110-ranDown)&&yLoc<150){
+        if(ran>=0&&ran<2){
+           blockCodeInput("다이아");
+     
+
+}
+}
+
+
+
+const MAP_WIDTH = 300; // 상단에 선언
+const OCEAN_WIDTH = 30;
+const WATER_LEVEL = 53;
+const SHORE_WIDTH = 15;
+
+
+if(oceanRan==1){
+// 왼쪽 바다
+
+if(xLoc <= OCEAN_WIDTH + SHORE_WIDTH && yLoc >= WATER_LEVEL){
+    const depth = yLoc - WATER_LEVEL;
+    const shoreX = Math.max(0, OCEAN_WIDTH + SHORE_WIDTH - Math.floor(depth * 0.7));
+    
+    if(xLoc <= shoreX){
+        if(yLoc === WATER_LEVEL && Math.random() < 0.3){
+            blockCodeInput("바다"); //모래
+        } else {
+            blockCodeInput("바다");
+        }
+        return;
+    }
+}
+
+
+
+}else if(oceanRan==2){
+// 오른쪽 바다
+if(xLoc >= MAP_WIDTH - OCEAN_WIDTH - SHORE_WIDTH && yLoc >= WATER_LEVEL){
+    const depth = yLoc - WATER_LEVEL;
+    const shoreX = MAP_WIDTH - OCEAN_WIDTH - SHORE_WIDTH + Math.floor(depth * 0.7);
+    
+    if(xLoc >= shoreX){
+        if(yLoc === WATER_LEVEL && Math.random() < 0.3){
+            blockCodeInput("바다");//모래
+        } else {
+            blockCodeInput("바다");
+        }
+        return;
+    }
+}
+}
+// 테라리아 스타일 던전 생성 코드
+const DUNGEON_START_X = oceanRan === 1 ? 267 : (oceanRan === 2 ? 0 : 267); // 조건 수정
+const DUNGEON_WIDTH = 30; // 던전 가로 크기
+
+// 던전 영역 체크
+if(xLoc >= DUNGEON_START_X && xLoc <= DUNGEON_START_X + DUNGEON_WIDTH 
+   && yLoc >= 33 && yLoc <= 150) {
+    
+    // ==================== 지상 던전 구조물 (y=33~52) ====================
+    if(yLoc >= 33 && yLoc < 53) {
+        // 1. 지붕 생성 (y=33)
+        if(yLoc === 33) {
+            // 톱니 모양 지붕 (3칸마다 돌출)
+            if(xLoc % 3 === 0) {
+                blockCodeInput("던전블록1");
+                return;
+            }
+            // 기본 지붕
+            if(xLoc >= DUNGEON_START_X && xLoc <= DUNGEON_START_X + DUNGEON_WIDTH) {
+                blockCodeInput("던전블록3");
+                return;
+            }
+        }
+        
+        // 2. 바닥 생성 (y=52)
+        if(yLoc === 52) {
+            // 입구는 비워둠 (중앙 3칸)
+            if(xLoc >= DUNGEON_START_X + Math.floor(DUNGEON_WIDTH/2) - 1 && 
+               xLoc <= DUNGEON_START_X + Math.floor(DUNGEON_WIDTH/2) + 1) {
+                return;
+            }
+            blockCodeInput("던전블록3");
+            return;
+        }
+        
+        // 3. 외벽 생성
+        if(xLoc === DUNGEON_START_X || xLoc === DUNGEON_START_X + DUNGEON_WIDTH) {
+            blockCodeInput("던전블록1");
+            return;
+        }
+        
+        // 4. 기둥만 생성 (격자무늬 제거)
+        if((xLoc - DUNGEON_START_X) % 10 === 0) {
+            blockCodeInput("던전블록2");
+            return;
+        }
+        
+        // 지상 내부는 비워둠 (격자무늬 없음)
+        return;
+    }
+    
+    // ==================== 지하 던전 구조 (y=53~150) ====================
+    
+    // 외벽 생성f
+    if(xLoc === DUNGEON_START_X || xLoc === DUNGEON_START_X + DUNGEON_WIDTH) {
+        blockCodeInput("던전블록1");
+        return;
+    }
+
+    // 층 구분 (20블록 간격)
+    if((yLoc - 53) % 20 === 0) {
+        blockCodeInput("던전블록3");
+        return;
+    }
+
+    // 방 생성
+    if((xLoc - DUNGEON_START_X) % 10 === 0 && (yLoc - 53) % 20 === 5) {
+        // 방 크기 5x5
+        for(let dy=0; dy<5; dy++) {
+            for(let dx=0; dx<5; dx++) {
+                if(dx === 0 || dx === 4 || dy === 0 || dy === 4) {
+                    blockCodeInput("던전블록2", xLoc + dx, yLoc + dy);
+                }
+            }
+        }
+        
+        // 보물상자를 꿀블럭으로 대체 (30% 확률)
+        if(Math.random() < 0.3) {
+            blockCodeInput("파티블록", xLoc + 2, yLoc + 3);
+        }
+        return;
+    }
+
+    // 기둥/복도 생성
+    if((xLoc - DUNGEON_START_X) % 8 === 0) {
+        blockCodeInput("던전블록4");
+        return;
+    }
+
+    // 함정 생성 (5% 확률)
+    if(Math.random() < 0.05) {
+        blockCodeInput("던전가시");
+        return;
+    }
+
+    // 기본 바닥 처리 - 던전 깊이에 따라 다른 패턴 사용
+    const depth = yLoc - 53;
+    if(depth < 40) {
+        blockCodeInput("던전블록" + (Math.random() < 0.7 ? "1" : "2"));
+    } else if(depth < 80) {
+        blockCodeInput("던전블록" + (Math.random() < 0.7 ? "2" : "3"));
+    } else {
+        blockCodeInput("던전블록" + (Math.random() < 0.7 ? "3" : "4"));
+    }
+    return;
+}
+
+
+}
+
+
+
+//해당Y좌표에 있는 모든X축 블럭 검색
+
+function randomBlockLoopY(arrY,arrX,blockCode,blockCode2,xLoc,yLoc){
+    
+      
+        //onsole.log(bLocateData[arrY][i].includes(blockCode));
+        if(bLocateData[arrY][xLoc].includes(blockCode)==true){
+                blockCodeInput("페이퍼나무");
+        //console.log(arrY,arrX,blockCode,blockCode2,yLoc,bLocateData[arrY][xLoc],bLocateData[arrY][xLoc].includes(blockCode));
+
+        }else if(bLocateData[arrY][xLoc].includes(blockCode)==false){
+                //blockCodeInput("잔디");
+        //console.log(arrY,arrX,blockCode,xLoc,bLocateData[arrY][xLoc],bLocateData[arrY][xLoc].includes(blockCode));
+
+        }
+           if(bLocateData[arrY][xLoc].includes(blockCode2)==true){
+                blockCodeInput("페이퍼나무");
+        //console.log(arrY,arrX,blockCode,blockCode2,yLoc,bLocateData[arrY][xLoc],bLocateData[arrY][xLoc].includes(blockCode2));
+
+        }else if(bLocateData[arrY][xLoc].includes(blockCode2)==false){
+               //blockCodeInput("잔디");
+        //console.log(arrY,arrX,blockCode,xLoc,bLocateData[arrY][xLoc],bLocateData[arrY][xLoc].includes(blockCode));
+
+        }
+        
+    
+
+}
+
+//블럭 캐기/ 사용 파트
+function clickBlock(blockId, stiffness, element, inputElement, blockLocationId){
+    if (blockSelected) {//아이탬 가방에서 블럭선택
+        useBlock2(blockLocationId); 
+        return;
+    }
+      // 신규 코드: 단일 클릭 시 한 번만 실행
+      if (inputElement.innerText !== "0,0") {
+        breakBlock(inputElement);
+    }
+
+    if (element.innerText === "0,0") {
+        console.log("이미 파괴된 블럭입니다.");
+        return;
+    }
+
+    globalBlockId = "";
+    globalBlockPower = 0;
+    globalInputElement = null;
+
+    globalBlockId = inputElement.dataset.bid || blockId;
+    globalBlockPower = parseInt(inputElement.dataset.stiffness) || 1; //데이터셋에서 불러옴
+    globalInputElement = inputElement;
+
+    console.log("클릭 시 경도:", globalBlockPower);
+console.log("데이터 속성 값:", inputElement.dataset.stiffness);
+
+    //console.log(inputElement.id);
+    var newBlockIdX=blockLocationId.slice(0,blockLocationId.indexOf(','));
+    var newBlockIdY=blockLocationId.slice(blockLocationId.indexOf(',')+1);
+
+
+    console.log("inputElement.innerText"+inputElement.innerText);//->40,1
+    console.log("globalBlockPower: "+globalBlockPower);//block power ->40,1 ->40
+    console.log("newBLockX,Y"+newBlockIdX+" "+newBlockIdY);//xy33,35중 33
+    console.log("blockId:"+blockId);
+    console.log("blockStiffness:"+stiffness);
+    console.log("blockLocationId:"+blockLocationId);
+    useBlock2(blockId,stiffness,inputElement,blockLocationId)
+      timeUpStart=true;
+}
+
+
+var it1;
+var it2;
+
+function breakBlock(inputElement) {
+    // 1. 현재 블럭의 내구도 가져오기 (data-stiffness 속성 사용)
+    let currentStiffness = parseInt(inputElement.dataset.stiffness) || 1;
+    
+    // 2. 블럭이 이미 파괴된 경우 처리
+    if (inputElement.innerText === "0,0") {
+        console.log("이미 파괴된 블럭입니다.");
+        return;
+    }
+
+    // 3. 내구도 감소 계산
+    currentStiffness -= power;
+    
+    // 4. 투명도 계산 (남은 내구도 비율 기반)
+    const initialStiffness = parseInt(inputElement.dataset.stiffness) || 1;
+    const opacity = Math.max(0, (currentStiffness / initialStiffness)).toFixed(3);
+
+    // 5. 블럭 상태 업데이트
+    if (currentStiffness > 0) {
+        inputElement.dataset.stiffness = currentStiffness;
+        inputElement.innerText = `${currentStiffness},${opacity}`;
+        inputElement.style.opacity = opacity;
+    } 
+    // 6. 블럭 완전 파괴 처리
+    else {
+        inputElement.style.backgroundImage = "none";
+        inputElement.className = "titlePad";
+        inputElement.dataset.empty = "true";
+        inputElement.innerText = "0,0";
+        inputElement.style.opacity = 1;
+        
+        // 7. 아이템 획득 처리
+        const blockId = inputElement.dataset.bid || globalBlockId;
+        itemBagGet(blockId, 1);
+        timeUpStart = false;
+    }
+
+    // 8. 상단 표시창 업데이트
+    document.querySelector(".mainBoxTop").innerText = 
+        `${currentStiffness}|${opacity}`;
+}
+
+
+function timeUp(){
+    if(timeUpStart==true){
+        breakBlock(globalInputElement);
+    }
+}
+
+function itemBagGet(getItemId, count) {
+    let elementId = null;
+    
+    switch(getItemId.toString()) { // 문자열 비교를 위해 명시적 형변환
+        case "1": elementId = "i00"; break;
+        case "2": elementId = "i01"; break;
+        case "3": elementId = "i02"; break;
+        case "4": elementId = "i03"; break;
+        case "48": elementId = "i04"; break;
+        case "61": elementId = "i05"; break;
+        case "10": elementId = "i06"; break;
+        case "11": elementId = "i07"; break;
+        case "12": elementId = "i08"; break;
+        case "13": elementId = "i10"; break;
+        case "14": elementId = "i11"; break;
+        case "46": elementId = "i12"; break;
+        case "54": elementId = "i13"; break;
+        case "52": elementId = "i14"; break;
+        case "49": elementId = "i15"; break;
+        case "50": elementId = "i16"; break;
+        case "51": elementId = "i17"; break;
+        case "56": elementId = "i18"; break;
+        default:
+            console.log("획득할 수 없는 블럭입니다.");
+            return; // 함수 종료
+    }
+
+    const element = document.getElementById(elementId);
+    if (!element) {
+        console.error(`요소 ID '${elementId}'를 찾을 수 없습니다.`);
+        return;
+    }
+    
+    // 숫자 연산을 위해 현재 값 파싱
+    const currentValue = parseInt(element.innerText) || 0;
+    element.innerText = currentValue + parseInt(count);
+}
+
+var blockSelected = false;
+var globalUseBlockId2;
+
+// 인벤토리 수량 조정 함수
+function adjustInventory(display, bag, amount = 1) {
+    if (!display || !bag) return;
+    
+    display.innerText = Math.max(0, parseInt(display.innerText || 0) + amount);
+    bag.innerText = Math.max(0, parseInt(bag.innerText || 0) - amount);
+}
+// 전역 상태 관리 객체 수정
+let currentBlock = {
+    element: null,      // 현재 선택된 인벤토리 요소
+    originalCount: 0,   // 원본 블럭 개수
+    id: null,           // 블럭 ID
+    count: 0,           // 현재 선택 수량
+    image: null,        // 블럭 이미지 URL
+    stiffness: 1        // 블럭 경도
+};
+
+
+async function useBlock(bagPosition, blockId, blockId2, stiffness = 1) {
+    const bagElement = document.getElementById(bagPosition);
+    const selectedDisplay = document.querySelector(".selectedBlockDisplay");
+
+    //블럭 수량 부족
+    if (!bagElement || parseInt(bagElement.innerText) <= 0) {
+        console.error("수량이 부족합니다");
+        return;
+    }
+
+    // 1. 동일 블록 재선택 여부 확인
+    if (currentBlock.id === blockId) {
+        if (currentBlock.element.innerText <= 0) return;
+        
+        currentBlock.count++;
+        currentBlock.element.innerText = currentBlock.originalCount - currentBlock.count;
+        selectedDisplay.innerText = currentBlock.count.toString();
+        return;
+    }
+
+    // 2. 이전 블록 상태 복원
+    if (currentBlock.element) {
+        currentBlock.element.innerText = currentBlock.originalCount;
+    }
+
+    // 3. 새 블록 선택 처리
+    if (!bagElement || parseInt(bagElement.innerText) <= 0) return;
+
+    const originalCount = parseInt(bagElement.innerText);
+    currentBlock = {
+        element: bagElement,
+        originalCount: originalCount, // 변경된 부분
+        id: blockId,
+        count: 1,
+        stiffness: stiffness,
+        image: null
+    };
+    console.log("현재 선택된 블럭객체정보"+currentBlock)
+    try {
+        const imageUrl = await findImageUrl('img', blockId2, ['png', 'gif', 'bmp']);
+        selectedDisplay.style.backgroundImage = imageUrl ? `url(${imageUrl})` : "";
+        currentBlock.image = imageUrl;
+    } catch (error) {
+        console.error("이미지 로드 실패:", error);
+    }
+
+    bagElement.innerText = currentBlock.originalCount - 1;
+    selectedDisplay.innerText = "1";
+    selectedDisplay.dataset.blockId = blockId;
+    blockSelected = true;
+}
+
+
+
+function useBlock2(blockLocationId) {
+    // 1. 상태 유효성 검사
+    if (!blockSelected || !currentBlock.element) {
+        console.error("블록이 선택되지 않았거나 유효하지 않은 상태입니다.");
+        return;
+    }
+
+    const targetBlock = document.getElementById(blockLocationId);
+    const selectedDisplay = document.querySelector(".selectedBlockDisplay");
+
+
+    // 2. DOM 요소 존재 확인
+    if (!targetBlock || !selectedDisplay) {
+        console.error("요소를 찾을 수 없습니다.");
+        return;
+    }
+
+    // 3. 빈 블록 확인 (data-empty 속성 체크)
+    if (targetBlock.dataset.empty !== "true") {
+        console.error("빈 공간에만 설치할 수 있습니다.");
+        return;
+    }
+
+
+    // 상태 초기화
+    if (parseInt(selectedDisplay.innerText) <= 0) {
+        selectedDisplay.style.backgroundImage = "";
+        currentBlock = { element: null, originalCount: 0, id: null, count: 0 };
+        blockSelected = false;
+    }
+
+  
+           // 블럭 속성 설정 (수정된 부분)
+    targetBlock.className = `titlePad b${currentBlock.id}b`;
+    targetBlock.dataset.bid = currentBlock.id.toString();
+    targetBlock.dataset.stiffness = currentBlock.stiffness.toString();
+    targetBlock.dataset.empty = "false";
+    targetBlock.innerText = `${currentBlock.stiffness},${currentBlock.stiffness}`;
+    
+console.log('Installed Block:', {
+    id: targetBlock.id,
+    text: targetBlock.innerText,
+    empty: targetBlock.dataset.empty,
+    class: targetBlock.className
+});
+    // 5. 이미지 동적 로딩
+    if (currentBlock.image) {
+        targetBlock.style.backgroundImage = `url(${currentBlock.image})`;
+        targetBlock.style.backgroundSize = "30px 33px"; 
+    } else {
+        findImageUrl('img', currentBlock.id, ['png', 'gif', 'bmp'])
+            .then(url => {
+                targetBlock.style.backgroundImage = url ? `url(${url})` : "";
+                targetBlock.style.backgroundSize = "30px 33px";
+                currentBlock.image = url;
+            })
+            .catch(console.error);
+    }
+
+        // 6. 인벤토리 업데이트 (수정된 부분)
+    const newDisplayCount = parseInt(selectedDisplay.innerText) - 1;
+    
+    if(newDisplayCount < 0) {
+        console.error("사용 가능한 수량이 없습니다.");
+        return;
+    }
+
+    // ▼ 변경: 인벤토리에서 1개만 차감 (원본 유지) ▼
+    currentBlock.element.innerText = currentBlock.originalCount - currentBlock.count;
+    
+    // ▼ 변경: 선택된 수량만 감소 ▼
+    selectedDisplay.innerText = newDisplayCount;
+
+
+    // 7. 상태 초기화 조건 (순서 변경)
+    if (parseInt(selectedDisplay.innerText) <= 0) {
+        selectedDisplay.style.backgroundImage = "";
+        currentBlock = { element: null, originalCount: 0, id: null, count: 0 };
+        blockSelected = false;
+    }
+
+targetBlock.onclick = function() {
+  clickBlock(
+    this.dataset.bid,
+    parseInt(this.dataset.stiffness), // 숫자로 변환
+    this.className.split(' ')[1],
+    this,
+    this.id
+  );
+};
+
+    console.log(`블록 설치 완료: ${currentBlock.id}, 남은 수량: ${currentBlock.count}`);
+}
+
+// 이미지 URL 찾기 함수 (개선된 비동기 처리)
+async function findImageUrl(basePath, imageName, extensions) {
+    if (!imageName) return null;
+    
+    for (const ext of extensions) {
+        const url = `${basePath}/${imageName}.${ext}`;
+        try {
+            const exists = await checkImageExists(url);
+            if (exists) return url;
+        } catch (error) {
+            console.warn(`이미지 확인 오류 (${url}):`, error);
+        }
+    }
+    return null;
+}
+
+// 이미지 존재 여부를 비동기로 확인 (Promise 처리 개선)
+function checkImageExists(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false); // 오류시 reject가 아닌 false 반환
+        
+        // 이미지 로드 시작
+        img.src = url;
+    });
+}
+
+
+
+// CSS를 통한 부드러운 스크롤 설정
+document.documentElement.style.scrollBehavior = 'smooth';
+
+const SCROLL_STEP = 24;      // 한 번에 스크롤할 픽셀 수 (원본 20 → 60% 감소)
+const SCROLL_INTERVAL = 150; // 스크롤 간격 (ms) (원본 200 → 75% 감소)
+
+// 활성화된 스크롤 추적
+let activeScrolls = {};
+let lastKeyPressTime = {};
+
+// 스크롤 함수
+function performScroll(direction) {
+  switch(direction) {
+    case 'ArrowUp':
+      window.scrollBy(0, -SCROLL_STEP);
+      break;
+    case 'ArrowDown':
+      window.scrollBy(0, SCROLL_STEP);
+      break;
+    case 'ArrowLeft':
+      window.scrollBy(-SCROLL_STEP, 0);
+      break;
+    case 'ArrowRight':
+      window.scrollBy(SCROLL_STEP, 0);
+      break;
+  }
+}
+
+// 키보드 이벤트 리스너
+window.addEventListener('keydown', function(e) {
+  // 방향키인지 확인
+  if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+    e.preventDefault();
+    
+    const now = Date.now();
+    
+    // 이미 활성화된 스크롤이 없고, 마지막 키 입력과 충분한 시간이 지났으면
+    if(!activeScrolls[e.key] && (!lastKeyPressTime[e.key] || now - lastKeyPressTime[e.key] > 300)) {
+      lastKeyPressTime[e.key] = now;
+      
+      // 즉시 한 번 스크롤
+      performScroll(e.key);
+      
+      // 일정 간격으로 스크롤 계속
+      activeScrolls[e.key] = setInterval(() => {
+        performScroll(e.key);
+      }, SCROLL_INTERVAL);
+    }
+  }
+});
+
+// 키를 놓으면 스크롤 중지
+window.addEventListener('keyup', function(e) {
+  if(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+    if(activeScrolls[e.key]) {
+      clearInterval(activeScrolls[e.key]);
+      delete activeScrolls[e.key];
+    }
+  }
+});
+
+
+
+function updateTargetPosition(key) {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  
+  switch(key) {
+    case 'ArrowUp': 
+      targetY = Math.max(0, targetY - vh * VIEWPORT_MULTIPLIER);
+      break;
+    case 'ArrowDown':
+      targetY = Math.min(document.documentElement.scrollHeight - vh, targetY + vh * VIEWPORT_MULTIPLIER);
+      break;
+    case 'ArrowLeft':
+      targetX = Math.max(0, targetX - vw * VIEWPORT_MULTIPLIER);
+      break;
+    case 'ArrowRight':
+      targetX = Math.min(document.documentElement.scrollWidth - vw, targetX + vw * VIEWPORT_MULTIPLIER);
+      break;
+  }
+
+  if(!isAnimating) {
+    isAnimating = true;
+    requestAnimationFrame(smoothScroll);
+  }
+}
+
+
+
+
+function dayTimeUp(){
+    dayTime++;
+   
+    if(dayTime>=60){
+        dayTimeHour++;
+        dayTime=0;
+        updateBlocksBrightness();
+    }
+    if(dayTimeHour<12){
+        document.querySelector(".dayTimeBox").innerText=`Am ${dayTimeHour}:${dayTime}`;
+    }else if(dayTimeHour>=12&&dayTimeHour<24){
+        document.querySelector(".dayTimeBox").innerText=`Pm ${dayTimeHour}:${dayTime}`;
+
+    }else{
+        document.querySelector(".dayTimeBox").innerText=`Am ${dayTimeHour}:${dayTime}`;
+        dayTimeHour=0;
+    }
+ 
+
+}
+function changeSkyPlus(){
+
+    updateBlocksBrightness();
+
+switch (dayTimeHour) {  // time은 1~24 범위의 값
+       case 0:  // 24:00 (00:00) 자정
+        changeSkyImg(37);  // 가장 어두운 밤
+            MusicStartA("stopDay");
+        break;
+    case 1:  // 01:00 심야
+        changeSkyImg(38);  // 가장 어두운 검푸른 밤
+        break;
+    case 2:  // 02:00 깊은 밤
+        changeSkyImg(38);  // 가장 어두운 검푸른 밤
+        break;
+    case 3:  // 03:00 후심야
+        changeSkyImg(37);  // 어두운 밤
+        break;
+    case 4:  // 04:00 새벽 전
+        changeSkyImg(36);  // 밤
+        break;
+    case 5:  // 05:00 이른 새벽
+        changeSkyImg(35);  // 어두운 파란 밤
+        break;
+    case 6:  // 06:00 새벽
+        changeSkyImg(15);  // 보라색 새벽
+        break;
+    case 7:  // 07:00 해 뜨기 직전
+        changeSkyImg(16);  // 분홍빛 새벽
+        break;
+    case 8:  // 08:00 일출
+        changeSkyImg(17);  // 주황빛 해뜰녘
+        break;
+    case 9:  // 09:00 이른 아침
+        changeSkyImg(18);  // 밝은 주황빛
+        break;
+    case 10:  // 10:00 아침
+        changeSkyImg(19);  // 밝은 하늘
+        break;
+    case 11:  // 11:00 늦은 아침
+ 
+
+        changeSkyImg(20);  // 밝은 하늘
+        break;
+    case 12:  // 12:00 정오
+        changeSkyImg(21);  // 가장 밝은 하늘
+        dayMusicType=parseInt((Math.random()*2)+1);
+        MusicStartA("startDay");
+            changeTextColor("day");
+
+        break;
+    case 13:  // 13:00 이른 오후
+        changeSkyImg(22);  // 맑은 하늘색
+        break;
+    case 14:  // 14:00 오후
+        changeSkyImg(23);  // 푸른 하늘
+        break;
+    case 15:  // 15:00 늦은 오후
+        changeSkyImg(24);  // 푸른 하늘
+        break;
+    case 16:  // 16:00 해질녘 전
+        changeSkyImg(25);  // 옅은 하늘색
+        break;
+    case 17:  // 17:00 해질녘
+        changeSkyImg(26);  // 황혼 노을빛
+        break;
+    case 18:  // 18:00 일몰
+        changeSkyImg(27);  // 노을
+        break;
+    case 19:  // 19:00 황혼
+        changeSkyImg(28);  // 붉은 노을
+        break;
+    case 20:  // 20:00 초저녁
+        changeSkyImg(29);  // 저녁 노을
+        break;
+    case 21:  // 21:00 저녁
+        changeSkyImg(30);  // 황혼 보라색
+        break;
+    case 22:  // 22:00 밤
+        changeSkyImg(31);  // 어두운 파란색
+        break;
+    case 23:  // 23:00 깊은 밤
+        changeSkyImg(33);  // 깊은 밤하늘
+        break;
+    case 24:  // 24:00 (00:00) 자정
+        changeSkyImg(37);  // 가장 어두운 밤
+            MusicStartA("stopDay");
+            changeTextColor("night");
+        break;
+    default:  // 잘못된 시간값 처리
+        changeSkyImg(21);  // 기본값: 밝은 하늘
+        break;
+
+        
+}
+var allSkyBlock = document.querySelectorAll(".b15b");
+//console.log(allSkyBlock);
+function changeSkyImg(input){
+    document.querySelectorAll(".b15b").forEach(function(block){
+        block.style.backgroundImage = `url(img/${input}.bmp)`;
+    });
+        document.querySelectorAll(".mainBox").forEach(function(block){
+        block.style.backgroundImage = `url(img/${input}.bmp)`;
+    });
+}
+
+}
+function changeTextColor(input){
+if(input=="night"){
+document.querySelector(".fullScreen").style.color="white";
+document.querySelector(".goHome").style.color="white";
+document.querySelector(".mainBoxTop").style.color="white";
+document.querySelector(".dayTimeBox").style.color="white";
+
+}else if(input=="day"){
+document.querySelector(".fullScreen").style.color="black";
+document.querySelector(".goHome").style.color="black";
+document.querySelector(".mainBoxTop").style.color="black";
+document.querySelector(".dayTimeBox").style.color="black";
+
+}
+}
+
+//밤될수록 블럭 어둡게 / 낮될수록 밝게
+function updateBlocksBrightness() {
+  const factor = calculateTimeBrightnessFactor();
+  
+  // 블럭 밝기 업데이트
+  document.querySelectorAll('.titlePad').forEach(block => {
+    const y = parseInt(block.id.split(',')[1]);
+    const base = calculateDark(y);
+    const final = base * factor;
+    block.style.filter = `brightness(${final})`;
+  });
+
+  // 메인 박스 배경 밝기 업데이트
+  const mainBox = document.querySelector('.mainBox');
+  mainBox.style.setProperty('--time-brightness', factor);
+  
+  // 배경 이미지 중첩 방지를 위한 별도 처리
+  const currentBackground = mainBox.style.backgroundImage;
+  mainBox.style.backgroundImage = 'none';
+  mainBox.style.backgroundImage = currentBackground;
+}
+
+// Function to calculate brightness factor based on time of day (0.5 to 1.0)
+function calculateTimeBrightnessFactor() {
+    // Night hours (18:00 to 06:00)
+    if (dayTimeHour >= 18 || dayTimeHour < 6) {
+        return 0.5;
+    }
+    // Morning transition (06:00 to 10:00)
+    else if (dayTimeHour >= 6 && dayTimeHour < 10) {
+        // Linear interpolation from 0.5 at 06:00 to 1.0 at 10:00
+        return 0.5 + (0.5 * ((dayTimeHour - 6) / 4));
+    }
+    // Evening transition (14:00 to 18:00)
+    else if (dayTimeHour >= 14 && dayTimeHour < 18) {
+        // Linear interpolation from 1.0 at 14:00 to 0.5 at 18:00
+        return 1.0 - (0.5 * ((dayTimeHour - 14) / 4));
+    }
+    // Day hours (10:00 to 14:00)
+    else {
+        return 1.0;
+    }
+}
+
+
+</script>
+
+</html>
