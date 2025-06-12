@@ -2668,7 +2668,7 @@ vertical-align: middle;
   <!-- FontFaceObserver 라이브러리 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fontfaceobserver/2.1.0/fontfaceobserver.standalone.js"></script>
   <script>
-
+    let removeStartBeforePageVar=false;
 
  let randomMusic=null;
  let musicTitle;
@@ -2824,7 +2824,9 @@ wrapper.addEventListener("click", () => {
     talk.textContent = "touch me!";
     musicCute.pause();
 
+    
     const rand = Math.random();
+    if(removeStartBeforePageVar==false){
     if (rand < 0.2) {
       randomMusic = musicMain1;
     } else if (rand < 0.4) {
@@ -2837,7 +2839,9 @@ wrapper.addEventListener("click", () => {
       randomMusic = musicMain5;
     }
     randomMusic.play();
+    }
   }, 10000);
+
 });
 
 
@@ -3312,12 +3316,12 @@ const musicSlime_king = new Audio("music/SlimeKing.mp3");
 musicSlime_king.loop = true;
 musicSlime_king.playbackRate = 1.0;
 
+// Space (예시, 파일명에 맞게 수정)
+const musicSlime_king2 = new Audio("music/SlimeKing2.mp3");
+musicSlime_king2.loop = true;
+musicSlime_king2.playbackRate = 1.0;
 
 
-// aliveWall (예시, 파일명에 맞게 수정)
-const musicAliveWall = new Audio("music/AliveWall.mp3");
-musicAliveWall.loop = true;
-musicAliveWall.playbackRate = 1.0;
 
 
 
@@ -3448,7 +3452,7 @@ if (isFirstMainMusic) {
 // 함수 정의: .startBeforeScreen 요소를 숨깁니다.
 function removeStartBeforePage() {
 
-
+removeStartBeforePageVar=true;
  
          effectSound("coin");
     const startBeforeScreen = document.querySelector('.startBeforeScreen');
@@ -3460,6 +3464,7 @@ function removeStartBeforePage() {
     musicMain3.pause();
     musicMain4.pause();
     musicMain5.pause();
+  musicCute.pause();
 }
 
   
@@ -9155,7 +9160,6 @@ const sounds = {
     bossWin: new Audio("sound/bossWin.mp3"),
     teleport: new Audio("sound/teleport.mp3"),
     explode: new Audio("sound/explode.mp3"),
-    cute: new Audio("sound/cute.mp3"),
     heal: new Audio("sound/heal.mp3"),
 
 };
